@@ -59,10 +59,11 @@ After authentication, the Ubuntu terminal was accessible remotely from the Windo
 
 ### Screenshot
 
-_Insert screenshot here:_
+
 
 ```text
-[SCREENSHOT — Ubuntu Server installation / SSH configuration]
+<img width="951" height="246" alt="1" src="https://github.com/user-attachments/assets/2f7ba8eb-9fa3-4243-bcea-17340f857e88" />
+
 ```
 
 ---
@@ -85,13 +86,7 @@ This confirms that:
 - The SSH service is running.
 - Remote administration through SSH is working correctly.
 
-### Screenshot
 
-_Insert screenshot here:_
-
-```text
-[SCREENSHOT — Successful SSH connection from Windows to Ubuntu Server]
-```
 
 ---
 
@@ -135,10 +130,11 @@ The successful execution confirms that Docker is correctly installed and able to
 
 ### Screenshot
 
-_Insert screenshot here:_
+
 
 ```text
-[SCREENSHOT — Docker installation and verification]
+<img width="752" height="75" alt="2" src="https://github.com/user-attachments/assets/7e651f1e-c545-4a7e-8368-4fbd2b7fbcb2" />
+
 ```
 
 ---
@@ -174,6 +170,8 @@ The Jenkins repository was then configured:
 echo "deb [signed-by=/etc/apt/keyrings/jenkins-keyring.asc] https://pkg.jenkins.io/debian-stable binary/" | \
 sudo tee /etc/apt/sources.list.d/jenkins.list > /dev/null
 ```
+<img width="1452" height="612" alt="3" src="https://github.com/user-attachments/assets/1e4546b5-0208-4123-b3c5-de0bd32ce099" />
+
 
 ## 4.3 Install Jenkins
 
@@ -188,6 +186,7 @@ Jenkins was installed with:
 ```bash
 sudo apt install -y jenkins
 ```
+<img width="1276" height="346" alt="4" src="https://github.com/user-attachments/assets/dfa9aefc-e78a-434e-b389-cdf2b669923e" />
 
 ## 4.4 Verify Jenkins Service
 
@@ -200,6 +199,9 @@ sudo systemctl status jenkins
 The service was successfully running.
 
 Jenkins was also configured to start automatically with the system.
+
+<img width="1445" height="261" alt="5" src="https://github.com/user-attachments/assets/cfc5f662-9976-4e29-91fe-9a768eeeecc4" />
+
 
 ## 4.5 Access Jenkins from the Physical Machine
 
@@ -221,10 +223,11 @@ The Jenkins setup was then completed through the web interface.
 
 ### Screenshot
 
-_Insert screenshot here:_
+
 
 ```text
-[SCREENSHOT — Jenkins running and accessible from the physical machine]
+<img width="1916" height="926" alt="6" src="https://github.com/user-attachments/assets/7448af9c-15a8-4cbe-9c7a-e5058e49e7ee" />
+
 ```
 
 ---
@@ -241,12 +244,7 @@ The CV is stored in the `cv` directory of this Git repository.
 
 Project structure:
 
-```text
-cv/
-├── index.html
-├── style.css
-└── script.js
-```
+
 
 ## 5.1 HTML5
 
@@ -261,23 +259,8 @@ It includes sections such as:
 - DevOps Interests
 - Contact information
 
-## 5.2 CSS3
 
-The file `style.css` is responsible for:
 
-- Page layout
-- Typography
-- Spacing
-- Colors
-- Responsive design
-- CV styling
-- Dark theme styling
-
-## 5.3 JavaScript
-
-The file `script.js` provides an interactive theme-switching feature.
-
-The user can switch between the normal and dark themes using the theme button.
 
 ## 5.4 Running the CV
 
@@ -291,10 +274,11 @@ The CV was tested successfully in a web browser.
 
 ### Screenshot
 
-_Insert screenshot here:_
+
 
 ```text
-[SCREENSHOT — Completed one-page CV]
+<img width="1917" height="976" alt="7" src="https://github.com/user-attachments/assets/6e2ce7e3-84cb-48b7-a1b7-2232d7ade6be" />
+
 ```
 
 ---
@@ -324,7 +308,7 @@ ssh-keygen -t ed25519 -C "essidbaha18@gmail.com"
 The default location was used:
 
 ```text
-C:\Users\baha\.ssh\id_ed25519
+C:\Users\xxxx\.ssh\id_ed25519
 ```
 
 This generated two files:
@@ -339,7 +323,7 @@ The private key is stored locally and must never be shared.
 The public key is stored in:
 
 ```text
-C:\Users\baha\.ssh\id_ed25519.pub
+
 ```
 
 ## 6.3 Display the Public Key
@@ -351,6 +335,9 @@ Get-Content $env:USERPROFILE\.ssh\id_ed25519.pub
 ```
 
 The complete public key was copied.
+
+<img width="1067" height="510" alt="8" src="https://github.com/user-attachments/assets/370b1e6e-898c-4849-9627-bf355d97ad2b" />
+
 
 ## 6.4 Add the SSH Key to GitHub
 
@@ -391,117 +378,12 @@ This confirms that the Windows machine can authenticate with GitHub using SSH.
 
 ### Screenshot
 
-_Insert screenshot here:_
+
 
 ```text
-[SCREENSHOT — Successful GitHub SSH authentication]
+<img width="1070" height="82" alt="10" src="https://github.com/user-attachments/assets/1851957b-ee5f-4721-958f-4ca8ccff19b1" />
+
 ```
 
 ---
 
-# 7. Git Repository
-
-The practical work is managed using Git.
-
-The local repository is located at:
-
-```text
-C:\Users\baha\Desktop\devops-tp
-```
-
-The repository contains:
-
-```text
-devops-tp/
-├── README.md
-├── screenshots/
-└── cv/
-    ├── index.html
-    ├── style.css
-    └── script.js
-```
-
-Git was initialized with:
-
-```powershell
-git init
-```
-
-The current repository status can be checked with:
-
-```powershell
-git status
-```
-
-The files can be added to Git with:
-
-```powershell
-git add .
-```
-
-A commit can then be created with:
-
-```powershell
-git commit -m "Complete DevOps practical work"
-```
-
-The GitHub remote repository will be configured using SSH.
-
-Example:
-
-```powershell
-git remote add origin git@github.com:BahaEssid1/devops-tp.git
-```
-
-The repository can then be pushed with:
-
-```powershell
-git branch -M main
-git push -u origin main
-```
-
----
-
-# 8. Final Project Structure
-
-The final project structure is:
-
-```text
-devops-tp/
-│
-├── README.md
-│
-├── screenshots/
-│   ├── 02-ssh-success.png
-│   ├── 03-docker-installation.png
-│   ├── 04-jenkins.png
-│   ├── 05-cv.png
-│   └── 06-github-ssh.png
-│
-└── cv/
-    ├── index.html
-    ├── style.css
-    └── script.js
-```
-
----
-
-# 9. Conclusion
-
-This practical work covered the main steps required to prepare a basic DevOps environment.
-
-The following technologies and concepts were used:
-
-- Ubuntu Server
-- VMware virtualization
-- SSH
-- Docker
-- Jenkins
-- HTML5
-- CSS3
-- JavaScript
-- Git
-- GitHub
-- SSH authentication
-
-The Ubuntu Server was successfully accessed remotely through SSH, Docker and Jenkins were installed as services, a web-based CV was developed, and secure SSH authentication with GitHub was configured.
