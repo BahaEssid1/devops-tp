@@ -1,128 +1,250 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <title>DevOps & Cloud Engineer CV</title>
 
-    <link rel="stylesheet" href="style.css">
-</head>
+    <style>
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
 
-<body>
+      body {
+        font-family: Arial, sans-serif;
+        background: #f4f6f8;
+        color: #222;
+        line-height: 1.6;
+      }
 
+      .container {
+        width: 90%;
+        max-width: 900px;
+        margin: auto;
+      }
+
+      .header {
+        background: #1f2937;
+        color: white;
+        padding: 40px 0;
+        text-align: center;
+      }
+
+      .header h1 {
+        font-size: 38px;
+        margin-bottom: 5px;
+      }
+
+      .header h2 {
+        font-size: 20px;
+        font-weight: normal;
+        margin-bottom: 20px;
+      }
+
+      .contact {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 15px;
+        font-size: 14px;
+      }
+
+      button {
+        margin-top: 20px;
+        padding: 10px 18px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+
+      main {
+        background: white;
+        margin-top: 25px;
+        padding: 30px;
+        border-radius: 8px;
+      }
+
+      section {
+        margin-bottom: 30px;
+      }
+
+      section h2 {
+        color: #1f2937;
+        border-bottom: 2px solid #ddd;
+        padding-bottom: 8px;
+        margin-bottom: 15px;
+      }
+
+      .item {
+        margin-bottom: 18px;
+      }
+
+      .item h3 {
+        margin-bottom: 5px;
+      }
+
+      .skills {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+
+      .skills span {
+        background: #e5e7eb;
+        padding: 7px 12px;
+        border-radius: 5px;
+        font-size: 14px;
+      }
+
+      footer {
+        text-align: center;
+        padding: 25px;
+        font-size: 14px;
+        color: #666;
+      }
+
+      /* Dark theme */
+
+      body.dark {
+        background: #111827;
+        color: #f3f4f6;
+      }
+
+      body.dark main {
+        background: #1f2937;
+      }
+
+      body.dark section h2 {
+        color: #f3f4f6;
+        border-color: #4b5563;
+      }
+
+      body.dark .skills span {
+        background: #374151;
+      }
+
+      body.dark footer {
+        color: #aaa;
+      }
+    </style>
+  </head>
+
+  <body>
     <header class="header">
-        <div class="container">
-            <h1>Baha Essid</h1>
-            <h2>DevOps & Cloud Computing Student</h2>
+      <div class="container">
+        <h1>Baha Essid</h1>
+        <h2>DevOps & Cloud Computing Student</h2>
 
-            <div class="contact">
-                <span>Email: your.email@example.com</span>
-                <span>Phone: +216 XX XXX XXX</span>
-                <span>Location: Tunisia</span>
-                <span>GitHub: github.com/yourusername</span>
-            </div>
-
-            <button id="themeToggle">Toggle Theme</button>
+        <div class="contact">
+          <span>Email: your.email@example.com</span>
+          <span>Phone: +216 XX XXX XXX</span>
+          <span>Location: Tunisia</span>
+          <span>GitHub: github.com/yourusername</span>
         </div>
+
+        <button id="themeToggle">Toggle Theme</button>
+      </div>
     </header>
 
-
     <main class="container">
+      <section>
+        <h2>Profile</h2>
 
-        <section>
-            <h2>Profile</h2>
+        <p>
+          DevOps and Cloud Computing student interested in software engineering,
+          automation, containerization, cloud technologies, CI/CD and modern
+          application deployment.
+        </p>
+      </section>
 
-            <p>
-                DevOps and Cloud Computing student interested in software
-                engineering, automation, containerization, cloud technologies,
-                CI/CD and modern application deployment.
-            </p>
-        </section>
+      <section>
+        <h2>Education</h2>
 
+        <div class="item">
+          <h3>Master's Degree in DevOps and Cloud Computing</h3>
+          <p>ISET Tozeur — Tunisia</p>
+        </div>
+      </section>
 
-        <section>
-            <h2>Education</h2>
+      <section>
+        <h2>Technical Skills</h2>
 
-            <div class="item">
-                <h3>Master's Degree in DevOps and Cloud Computing</h3>
-                <p>ISET Tozeur — Tunisia</p>
-            </div>
-        </section>
+        <div class="skills">
+          <span>Linux</span>
+          <span>Git & GitHub</span>
+          <span>Docker</span>
+          <span>Kubernetes</span>
+          <span>Jenkins</span>
+          <span>CI/CD</span>
+          <span>Java</span>
+          <span>Spring Boot</span>
+          <span>Python</span>
+          <span>FastAPI</span>
+          <span>Node.js</span>
+          <span>PostgreSQL</span>
+          <span>MongoDB</span>
+          <span>Nginx</span>
+        </div>
+      </section>
 
+      <section>
+        <h2>Projects</h2>
 
-        <section>
-            <h2>Technical Skills</h2>
+        <div class="item">
+          <h3>Microservices E-Commerce Platform</h3>
+          <p>
+            Designed a microservices-based e-commerce application using backend
+            services, databases, Docker containers and DevOps practices.
+          </p>
+        </div>
 
-            <div class="skills">
-                <span>Linux</span>
-                <span>Git & GitHub</span>
-                <span>Docker</span>
-                <span>Kubernetes</span>
-                <span>Jenkins</span>
-                <span>CI/CD</span>
-                <span>Java</span>
-                <span>Spring Boot</span>
-                <span>Python</span>
-                <span>FastAPI</span>
-                <span>Node.js</span>
-                <span>PostgreSQL</span>
-                <span>MongoDB</span>
-                <span>Nginx</span>
-            </div>
-        </section>
+        <div class="item">
+          <h3>DevOps Infrastructure Lab</h3>
+          <p>
+            Configured Linux servers, SSH, Docker, Jenkins and virtualization
+            environments as part of DevOps practical work.
+          </p>
+        </div>
 
+        <div class="item">
+          <h3>Learning Platform</h3>
+          <p>
+            Developed a microservices-oriented learning platform using modern
+            web technologies and backend APIs.
+          </p>
+        </div>
+      </section>
 
-        <section>
-            <h2>Projects</h2>
+      <section>
+        <h2>DevOps Interests</h2>
 
-            <div class="item">
-                <h3>Microservices E-Commerce Platform</h3>
-                <p>
-                    Designed a microservices-based e-commerce application
-                    using backend services, databases, Docker containers and
-                    DevOps practices.
-                </p>
-            </div>
-
-            <div class="item">
-                <h3>DevOps Infrastructure Lab</h3>
-                <p>
-                    Configured Linux servers, SSH, Docker, Jenkins and
-                    virtualization environments as part of DevOps practical
-                    work.
-                </p>
-            </div>
-
-            <div class="item">
-                <h3>Learning Platform</h3>
-                <p>
-                    Developed a microservices-oriented learning platform using
-                    modern web technologies and backend APIs.
-                </p>
-            </div>
-        </section>
-
-
-        <section>
-            <h2>DevOps Interests</h2>
-
-            <p>
-                CI/CD automation, containerization, Kubernetes, Infrastructure
-                as Code, cloud computing, monitoring, security and
-                microservices architecture.
-            </p>
-        </section>
-
+        <p>
+          CI/CD automation, containerization, Kubernetes, Infrastructure as
+          Code, cloud computing, monitoring, security and microservices
+          architecture.
+        </p>
+      </section>
     </main>
 
-
     <footer>
-        <p>&copy; 2026 Baha Essid — DevOps & Cloud Computing</p>
+      <p>&copy; 2026 Baha Essid — DevOps & Cloud Computing</p>
     </footer>
 
+    <script>
+      const themeToggle = document.getElementById("themeToggle");
 
-    <script src="script.js"></script>
+      themeToggle.addEventListener("click", function () {
+        document.body.classList.toggle("dark");
 
-</body>
+        if (document.body.classList.contains("dark")) {
+          themeToggle.textContent = "Light Theme";
+        } else {
+          themeToggle.textContent = "Dark Theme";
+        }
+      });
+    </script>
+  </body>
 </html>
