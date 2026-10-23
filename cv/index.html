@@ -3,8 +3,11 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-    <title>DevOps & Cloud Engineer CV</title>
+    <meta
+      name="description"
+      content="Baha Essid's DevSecOps and Cloud Computing portfolio"
+    />
+    <title>Baha Essid | DevSecOps Portfolio</title>
 
     <style>
       * {
@@ -13,77 +16,174 @@
         padding: 0;
       }
 
+      :root {
+        --bg: #f3f6fb;
+        --surface: #ffffff;
+        --text: #172033;
+        --muted: #64748b;
+        --accent: #2563eb;
+        --border: #e2e8f0;
+      }
+
+      body.dark {
+        --bg: #0b1120;
+        --surface: #151e30;
+        --text: #e5eaf5;
+        --muted: #a4b1c7;
+        --accent: #7aa7ff;
+        --border: #2b3850;
+      }
+
       body {
         font-family: Arial, sans-serif;
-        background: #f4f6f8;
-        color: #222;
-        line-height: 1.6;
+        background: var(--bg);
+        color: var(--text);
+        line-height: 1.7;
+        transition:
+          background 0.2s,
+          color 0.2s;
+      }
+
+      a {
+        color: var(--accent);
+        text-decoration: none;
+      }
+
+      a:hover {
+        text-decoration: underline;
       }
 
       .container {
-        width: 90%;
-        max-width: 900px;
+        width: min(1080px, 92%);
         margin: auto;
       }
 
-      .header {
-        background: #1f2937;
-        color: white;
-        padding: 40px 0;
-        text-align: center;
+      header {
+        background: var(--surface);
+        border-bottom: 1px solid var(--border);
+        position: sticky;
+        top: 0;
+        z-index: 10;
       }
 
-      .header h1 {
-        font-size: 38px;
-        margin-bottom: 5px;
-      }
-
-      .header h2 {
-        font-size: 20px;
-        font-weight: normal;
-        margin-bottom: 20px;
-      }
-
-      .contact {
+      nav {
+        min-height: 70px;
         display: flex;
-        justify-content: center;
+        align-items: center;
+        justify-content: space-between;
+        gap: 18px;
         flex-wrap: wrap;
-        gap: 15px;
-        font-size: 14px;
+        padding: 12px 0;
+      }
+
+      .brand {
+        font-size: 1.15rem;
+        font-weight: bold;
+      }
+
+      .nav-links {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 18px;
+        align-items: center;
       }
 
       button {
-        margin-top: 20px;
-        padding: 10px 18px;
-        border: none;
-        border-radius: 5px;
+        background: var(--accent);
+        color: white;
+        border: 0;
+        border-radius: 8px;
+        padding: 10px 14px;
         cursor: pointer;
+        font-weight: bold;
+      }
+
+      .hero {
+        padding: 90px 0 70px;
+        background: linear-gradient(135deg, var(--surface), var(--bg));
+      }
+
+      .eyebrow {
+        color: var(--accent);
+        font-weight: bold;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        font-size: 0.85rem;
+      }
+
+      h1 {
+        font-size: clamp(2.3rem, 6vw, 4rem);
+        line-height: 1.15;
+        margin: 12px 0;
+      }
+
+      .hero p {
+        max-width: 680px;
+        color: var(--muted);
+        font-size: 1.1rem;
+      }
+
+      .hero-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 14px;
+        margin-top: 24px;
+      }
+
+      .button-link {
+        display: inline-block;
+        padding: 10px 16px;
+        border-radius: 8px;
+        background: var(--accent);
+        color: white;
+        font-weight: bold;
+      }
+
+      .button-link.secondary {
+        background: var(--surface);
+        color: var(--text);
+        border: 1px solid var(--border);
       }
 
       main {
-        background: white;
-        margin-top: 25px;
-        padding: 30px;
-        border-radius: 8px;
+        padding: 25px 0 55px;
       }
 
       section {
-        margin-bottom: 30px;
+        padding: 38px 0;
+        scroll-margin-top: 85px;
       }
 
-      section h2 {
-        color: #1f2937;
-        border-bottom: 2px solid #ddd;
-        padding-bottom: 8px;
-        margin-bottom: 15px;
-      }
-
-      .item {
+      .section-title {
+        font-size: 1.8rem;
         margin-bottom: 18px;
       }
 
-      .item h3 {
-        margin-bottom: 5px;
+      .section-intro {
+        color: var(--muted);
+        max-width: 720px;
+        margin-bottom: 22px;
+      }
+
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+        gap: 18px;
+      }
+
+      .card {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        padding: 22px;
+      }
+
+      .card h3 {
+        margin-bottom: 8px;
+      }
+
+      .card p {
+        color: var(--muted);
       }
 
       .skills {
@@ -93,157 +193,230 @@
       }
 
       .skills span {
-        background: #e5e7eb;
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 7px;
         padding: 7px 12px;
-        border-radius: 5px;
-        font-size: 14px;
+        font-size: 0.92rem;
+      }
+
+      .contact-card {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        padding: 22px;
       }
 
       footer {
         text-align: center;
-        padding: 25px;
-        font-size: 14px;
-        color: #666;
+        padding: 28px 0;
+        color: var(--muted);
+        border-top: 1px solid var(--border);
       }
 
-      /* Dark theme */
+      @media (max-width: 600px) {
+        nav {
+          align-items: flex-start;
+        }
 
-      body.dark {
-        background: #111827;
-        color: #f3f4f6;
-      }
+        .nav-links {
+          gap: 10px;
+        }
 
-      body.dark main {
-        background: #1f2937;
-      }
-
-      body.dark section h2 {
-        color: #f3f4f6;
-        border-color: #4b5563;
-      }
-
-      body.dark .skills span {
-        background: #374151;
-      }
-
-      body.dark footer {
-        color: #aaa;
+        .hero {
+          padding: 60px 0 45px;
+        }
       }
     </style>
   </head>
 
   <body>
-    <header class="header">
-      <div class="container">
-        <h1>Baha Essid</h1>
-        <h2>DevOps & Cloud Computing Student</h2>
+    <header>
+      <nav class="container">
+        <a class="brand" href="#home">BE. Portfolio</a>
 
-        <div class="contact">
-          <span>Email: your.email@example.com</span>
-          <span>Phone: +216 XX XXX XXX</span>
-          <span>Location: Tunisia</span>
-          <span>GitHub: github.com/yourusername</span>
+        <div class="nav-links">
+          <a href="#about">About</a>
+          <a href="#skills">Skills</a>
+          <a href="#projects">Projects</a>
+          <a href="#experience">Experience</a>
+          <a href="#contact">Contact</a>
+          <button id="themeToggle" type="button">Dark mode</button>
         </div>
-
-        <button id="themeToggle">Toggle Theme</button>
-      </div>
+      </nav>
     </header>
 
-    <main class="container">
-      <section>
-        <h2>Profile</h2>
-
+    <div class="hero" id="home">
+      <div class="container">
+        <p class="eyebrow">DevSecOps · Cloud · Automation</p>
+        <h1>Baha Essid</h1>
         <p>
-          DevOps and Cloud Computing student interested in software engineering,
-          automation, containerization, cloud technologies, CI/CD and modern
-          application deployment.
+          DevOps and Cloud Computing student interested in automating
+          infrastructure, building reliable applications, and integrating
+          security into the software delivery lifecycle.
         </p>
-      </section>
 
-      <section>
-        <h2>Education</h2>
+        <div class="hero-actions">
+          <a class="button-link" href="#projects">Explore my projects</a>
+          <a class="button-link secondary" href="#contact">Contact me</a>
+        </div>
+      </div>
+    </div>
 
-        <div class="item">
-          <h3>Master's Degree in DevOps and Cloud Computing</h3>
-          <p>ISET Tozeur — Tunisia</p>
+    <main class="container">
+      <section id="about">
+        <h2 class="section-title">About Me</h2>
+        <p class="section-intro">
+          I am pursuing a Master's degree in DevOps and Cloud Computing at ISET
+          Tozeur, Tunisia. My academic work focuses on Linux administration,
+          application development, containerization, CI/CD, and cloud-native
+          technologies.
+        </p>
+
+        <div class="grid">
+          <article class="card">
+            <h3>Education</h3>
+            <p>Master's Degree in DevOps and Cloud Computing</p>
+            <p>ISET Tozeur, Tunisia</p>
+          </article>
+
+          <article class="card">
+            <h3>Technical Focus</h3>
+            <p>
+              Automation, Linux, containers, CI/CD, application security, and
+              microservices.
+            </p>
+          </article>
         </div>
       </section>
 
-      <section>
-        <h2>Technical Skills</h2>
+      <section id="skills">
+        <h2 class="section-title">DevSecOps Skills</h2>
+        <p class="section-intro">
+          Technologies explored through coursework, practical labs, and software
+          projects.
+        </p>
 
         <div class="skills">
           <span>Linux</span>
-          <span>Git & GitHub</span>
+          <span>Git</span>
+          <span>GitHub</span>
           <span>Docker</span>
-          <span>Kubernetes</span>
           <span>Jenkins</span>
+          <span>Kubernetes</span>
+          <span>Ansible</span>
+          <span>Terraform</span>
+          <span>Argo CD</span>
           <span>CI/CD</span>
           <span>Java</span>
           <span>Spring Boot</span>
           <span>Python</span>
           <span>FastAPI</span>
           <span>Node.js</span>
+          <span>Express</span>
           <span>PostgreSQL</span>
           <span>MongoDB</span>
           <span>Nginx</span>
         </div>
       </section>
 
-      <section>
-        <h2>Projects</h2>
+      <section id="projects">
+        <h2 class="section-title">Projects</h2>
+        <p class="section-intro">
+          Selected academic and personal projects involving software development
+          and infrastructure automation.
+        </p>
 
-        <div class="item">
-          <h3>Microservices E-Commerce Platform</h3>
-          <p>
-            Designed a microservices-based e-commerce application using backend
-            services, databases, Docker containers and DevOps practices.
-          </p>
-        </div>
+        <div class="grid">
+          <article class="card">
+            <h3>DevSecOps Portfolio</h3>
+            <p>
+              A portfolio project covering web development, Git, containers,
+              CI/CD, and infrastructure automation.
+            </p>
+          </article>
 
-        <div class="item">
-          <h3>DevOps Infrastructure Lab</h3>
-          <p>
-            Configured Linux servers, SSH, Docker, Jenkins and virtualization
-            environments as part of DevOps practical work.
-          </p>
-        </div>
+          <article class="card">
+            <h3>Microservices E-Commerce Platform</h3>
+            <p>
+              A microservices-oriented application with backend services,
+              databases, automated tests, and containerization.
+            </p>
+          </article>
 
-        <div class="item">
-          <h3>Learning Platform</h3>
-          <p>
-            Developed a microservices-oriented learning platform using modern
-            web technologies and backend APIs.
-          </p>
+          <article class="card">
+            <h3>Learning Platform</h3>
+            <p>
+              A learning application exploring frontend development, APIs, and
+              independent backend services.
+            </p>
+          </article>
+
+          <article class="card">
+            <h3>DevOps Infrastructure Lab</h3>
+            <p>
+              Practical work with Ubuntu Server, SSH, Docker, Jenkins,
+              virtualization, and cluster environments.
+            </p>
+          </article>
         </div>
       </section>
 
-      <section>
-        <h2>DevOps Interests</h2>
+      <section id="experience">
+        <h2 class="section-title">Experience & Learning</h2>
+        <div class="grid">
+          <article class="card">
+            <h3>Academic Projects</h3>
+            <p>
+              Building and testing applications while learning software
+              engineering and deployment practices.
+            </p>
+          </article>
 
-        <p>
-          CI/CD automation, containerization, Kubernetes, Infrastructure as
-          Code, cloud computing, monitoring, security and microservices
-          architecture.
-        </p>
+          <article class="card">
+            <h3>Hands-on Labs</h3>
+            <p>
+              Practicing Linux system administration, remote access, container
+              management, CI/CD, and automation.
+            </p>
+          </article>
+        </div>
+      </section>
+
+      <section id="contact">
+        <h2 class="section-title">Contact</h2>
+        <div class="contact-card">
+          <p class="section-intro">
+            Interested in DevOps, cloud technologies, and collaborative software
+            projects.
+          </p>
+          <p>
+            GitHub:
+            <a
+              href="https://github.com/BahaEssid1"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              github.com/BahaEssid1
+            </a>
+          </p>
+          <p>Email: essidbaha18@gmail.com</p>
+        </div>
       </section>
     </main>
 
     <footer>
-      <p>&copy; 2026 Baha Essid — DevOps & Cloud Computing</p>
+      <div class="container">
+        <p>&copy; 2026 Baha Essid · DevSecOps Portfolio</p>
+      </div>
     </footer>
 
     <script>
       const themeToggle = document.getElementById("themeToggle");
 
-      themeToggle.addEventListener("click", function () {
-        document.body.classList.toggle("dark");
-
-        if (document.body.classList.contains("dark")) {
-          themeToggle.textContent = "Light Theme";
-        } else {
-          themeToggle.textContent = "Dark Theme";
-        }
+      themeToggle.addEventListener("click", () => {
+        const isDark = document.body.classList.toggle("dark");
+        themeToggle.textContent = isDark ? "Light mode" : "Dark mode";
       });
     </script>
   </body>
