@@ -711,9 +711,9 @@ Repository: [BahaEssid1/devops-tp](https://github.com/BahaEssid1/devops-tp)
 
 <img width="1440" height="535" alt="20" src="https://github.com/user-attachments/assets/1740d6c4-da03-4735-9984-744f6eb0a950" />
 
-9. Migrating the DevSecOps Portfolio to Next.js
+# 9. Migrating the DevSecOps Portfolio to Next.js
 
-9.1. Task 18 — Create a Next.js Portfolio
+ ## 9.1. Task 18 — Create a Next.js Portfolio
 
 A new version of the DevSecOps Portfolio was developed using Next.js, JavaScript, React components, and CSS. The goal was to preserve the main sections of the original HTML/CSS/JavaScript portfolio while improving the application's structure and maintainability.
 
@@ -757,12 +757,15 @@ Run the Application
 
 Navigate to the application directory and install its dependencies:
 
+```bash
 cd portfolio-nextjs
 npm install
-
+```
 Start the development server:
 
+```bash
 npm run dev
+```
 
 Open the following address in a browser:
 
@@ -770,19 +773,26 @@ http://localhost:3000
 
 To generate an optimized production build, run:
 
+```bash
 npm run build
+```
 
 Application Screenshot
 
 The following screenshot shows the Next.js version of the DevSecOps Portfolio.
 
+<img width="1342" height="685" alt="27" src="https://github.com/user-attachments/assets/8c451c60-4cf3-47ba-93a0-d8d286684ee9" />
+
+
 Screenshot: Next.js Portfolio Homepage
 
-<!-- Add your homepage screenshot here, for example: docs/screenshots/nextjs-homepage.png -->
+
+<img width="1917" height="972" alt="22" src="https://github.com/user-attachments/assets/5d7f873a-fed2-4e6f-a658-49cade93ccfa" />
 
 
 
-9.2. Task 19 — Create Reusable Components
+
+ ## 9.2. Task 19 — Create Reusable Components
 
 The portfolio was organized into reusable React components. Each component is responsible for displaying a specific section of the application.
 
@@ -849,7 +859,7 @@ This structure separates the user interface, page routing, styling, and data. Co
 <img width="452" height="882" alt="26" src="https://github.com/user-attachments/assets/c2c66f39-8c99-4b43-9085-93609acc4386" />
 
 
-9.3. Task 20 — Separate Skills and Projects Data
+## 9.3. Task 20 — Separate Skills and Projects Data
 
 The information displayed in the Skills and Projects sections was moved into separate JavaScript data files.
 
@@ -920,7 +930,7 @@ Consistency: Project cards and project detail pages use a shared source of infor
 
 Scalability: New skills and projects can be added without rewriting the components.
 
-9.4. Task 21 — Create Dedicated Project Pages
+ ## 9.4. Task 21 — Create Dedicated Project Pages
 
 Two project-related routes were implemented using the Next.js App Router.
 
@@ -965,7 +975,7 @@ Screenshot 2: Individual Project Details Page
 
 
 
-9.5. Validation and Build
+ ## 9.5. Validation and Build
 
 The application was tested locally to verify the homepage, reusable components, project listing, and dynamic project detail routes.
 
