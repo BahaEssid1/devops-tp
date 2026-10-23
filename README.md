@@ -830,6 +830,8 @@ Additional components, such as Experience.js, are used to keep the application o
 
 Component Structure
 
+---
+
 portfolio-nextjs/
 ├── app/
 │   ├── layout.js
@@ -853,7 +855,7 @@ portfolio-nextjs/
 ├── public/
 ├── package.json
 └── README.md
-
+---
 This structure separates the user interface, page routing, styling, and data. Components can be reused across different pages without duplicating their implementation.
 
 <img width="452" height="882" alt="26" src="https://github.com/user-attachments/assets/c2c66f39-8c99-4b43-9085-93609acc4386" />
