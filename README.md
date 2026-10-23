@@ -434,58 +434,91 @@ JavaScript Code
 The following excerpt demonstrates how project data is stored and rendered dynamically.
 
 const projects = [
-    {
-        title: "E-commerce Microservices Platform",
-        description:
-            "A microservices project exploring REST APIs, automated testing, and containerization.",
-        technologies: ["Node.js", "Microservices", "Docker", "Jenkins"],
-        github: "https://github.com/BahaEssid1",
-        linkLabel: "Explore repositories"
-    },
-    {
-        title: "DevOps Portfolio",
-        description:
-            "A responsive portfolio presenting technical skills and DevOps projects.",
-        technologies: ["HTML", "CSS", "JavaScript", "Git"],
-        github: "https://github.com/BahaEssid1",
-        linkLabel: "View GitHub profile"
-    }
-];
+        {
+          title: "E-commerce Microservices Platform",
+          description:
+            "A microservices project exploring REST APIs, service separation, automated testing, and containerization.",
+          technologies: ["Node.js", "Microservices", "Docker", "Jenkins"],
+          github: "https://github.com/BahaEssid1",
+          linkLabel: "Explore repositories",
+        },
+        {
+          title: "DevOps Portfolio",
+          description:
+            "A responsive personal portfolio presenting technical skills, projects, and hands-on DevOps learning.",
+          technologies: ["HTML", "CSS", "JavaScript", "Git"],
+          github: "https://github.com/BahaEssid1",
+          linkLabel: "View GitHub profile",
+        },
+        {
+          title: "K3s Kubernetes Lab",
+          description:
+            "A practical lab exploring Kubernetes concepts, cluster nodes, deployments, services, and Linux administration.",
+          technologies: ["Ubuntu", "K3s", "Kubernetes", "Networking"],
+          github: "https://github.com/BahaEssid1",
+          linkLabel: "Explore repositories",
+        },
+        {
+          title: "Jenkins CI/CD Lab",
+          description:
+            "A learning project focused on Git integration, automated build workflows, testing, and continuous integration.",
+          technologies: ["Jenkins", "GitHub", "Linux", "CI/CD"],
+          github: "https://github.com/BahaEssid1",
+          linkLabel: "Explore repositories",
+        },
+        {
+          title: "Vagrant Infrastructure Lab",
+          description:
+            "A virtual machine lab for practicing reproducible environments and automated provisioning.",
+          technologies: ["Vagrant", "VirtualBox", "Ubuntu", "Automation"],
+          github: "https://github.com/BahaEssid1",
+          linkLabel: "Explore repositories",
+        },
+      ];
 
-function renderProjects() {
-    const container = document.getElementById("projects-container");
+      // Generate project cards from the projects array.
+      function renderProjects() {
+        const container = document.getElementById("projects-container");
 
-   if (!container) {
-        console.error("Projects container was not found.");
-        return;
-    }
+        if (!container) {
+          console.error("Projects container was not found.");
+          return;
+        }
 
-   container.innerHTML = projects.map((project, index) => {
-        const technologyTags = project.technologies
-            .map(technology =>
-              <span class="tech-tag">${technology}</span>`
-            )
-            .join("");
+        container.innerHTML = projects
+          .map((project, index) => {
+            const technologyTags = project.technologies
+              .map(
+                (technology) => `<span class="tech-tag">${technology}</span>`,
+              )
+              .join("");
 
-   return `
-  <article class="project-card">
-           <span>PROJECT ${String(index + 1).padStart(2, "0")}</span>
-                <h3>${project.title}</h3>
-                <p>${project.description}</p>
-                <div class="project-technologies">
-                    ${technologyTags}
-                </div>
-                <a href="${project.github}"
-                   target="_blank"
-                   rel="noopener noreferrer">
-                    ${project.linkLabel} ↗
-                </a>
-            </article>
-        `;
-    }).join("");
-}
+            return `
+                    <article class="project-card">
+                        <span class="project-number">
+                            PROJECT ${String(index + 1).padStart(2, "0")}
+                        </span>
 
-renderProjects();
+                        <h3>${project.title}</h3>
+
+                        <p>${project.description}</p>
+
+                        <div class="project-technologies">
+                            ${technologyTags}
+                        </div>
+
+                        <a
+                            class="project-link"
+                            href="${project.github}"
+                            target="_blank"
+                            rel="noopener noreferrer">
+                            ${project.linkLabel} ↗
+                        </a>
+                    </article>
+                `;
+          })
+          .join("");
+      }
 
 
 
