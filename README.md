@@ -991,6 +991,144 @@ Result: The Next.js portfolio provides a component-based structure, separated da
 
 
 
+## 10. Jenkins Pipeline
+
+### 10.1. Objective
+
+The objective of this section is to create a Jenkins Pipeline that automatically retrieves the DevSecOps Portfolio repository from GitHub, installs the dependencies of the Next.js application, and builds the application for production.
+
+The pipeline is defined in a `Jenkinsfile` located at the root of the repository. It automates the main steps required to validate the application through Jenkins.
+
+### 10.2. Jenkinsfile
+
+The following `Jenkinsfile` defines the pipeline:
+
+```groovy
+pipeline {
+    agent any
+
+    options {
+        skipDefaultCheckout(true)
+        timestamps()
+    }
+
+    environment {
+        APP_DIR = 'portfolio-nextjs'
+    }
+
+    stages {
+        stage('Checkout') {
+            steps {
+                checkout scm
+            }
+        }
+
+        stage('Install Dependencies') {
+            steps {
+                dir("${APP_DIR}") {
+                    sh 'npm ci'
+                }
+            }
+        }
+
+        stage('Build Next.js') {
+            steps {
+                dir("${APP_DIR}") {
+                    sh 'npm run build'
+                }
+            }
+        }
+    }
+
+    post {
+        success {
+            echo 'Portfolio checkout, dependency installation, and Next.js build completed successfully.'
+        }
+        failure {
+            echo 'Pipeline failed. Check the stage logs above for details.'
+        }
+    }
+}
+```
+
+### 10.3. Task 22 — Automatic GitHub Checkout
+
+The first stage, `Checkout`, retrieves the source code from the GitHub repository using the Jenkins SCM configuration.
+
+The pipeline is configured to use the `main` branch and the `Jenkinsfile` stored at the root of the repository.
+
+This stage ensures that Jenkins obtains the latest available source code before executing the subsequent steps.
+
+**Result:** Jenkins successfully cloned the repository and checked out the `main` branch.
+
+**Screenshot — Jenkins Pipeline Execution**
+
+<img width="931" height="292" alt="29" src="https://github.com/user-attachments/assets/86ab1460-0295-467c-ad0c-786fe2e1b4a0" />
+
+
+### 10.4. Task 23 — Install Next.js Dependencies
+
+The second stage, `Install Dependencies`, installs the packages required by the Next.js application.
+
+The pipeline executes the following command inside the `portfolio-nextjs` directory:
+
+```bash
+npm ci
+```
+
+The `npm ci` command installs dependencies according to the `package-lock.json` file. It is suitable for automated builds because it provides a reproducible dependency installation based on the lockfile.
+
+**Result:** Jenkins successfully installed 346 packages and completed the dependency installation stage.
+
+**Screenshot — Install Dependencies Stage**
+
+<img width="955" height="246" alt="30" src="https://github.com/user-attachments/assets/87983ece-1325-49ac-8563-1c688099c5f1" />
+
+
+### 10.5. Task 24 — Build the Next.js Application
+
+The third stage, `Build Next.js`, builds the portfolio for production using the following command:
+
+```bash
+npm run build
+```
+
+This command runs the Next.js production build process. It compiles the application, performs TypeScript checks, generates static pages, and prepares the optimized production output.
+
+The build generated the homepage, the projects listing page, and the dynamic project detail pages.
+
+**Result:** The production build completed successfully. Jenkins displayed the generated routes and finished the pipeline with the status `SUCCESS`.
+
+**Screenshot — Next.js Build Result**
+
+<img width="982" height="256" alt="31" src="https://github.com/user-attachments/assets/fa2002e9-04db-4516-b761-ce51541fcb4a" />
+
+
+### 10.6. Pipeline Validation
+
+The Jenkins Pipeline was executed successfully, and all three stages completed without errors:
+
+| Stage | Description | Result |
+|---|---|---|
+| Checkout | Retrieves the repository from GitHub | SUCCESS |
+| Install Dependencies | Installs Next.js dependencies using `npm ci` | SUCCESS |
+| Build Next.js | Builds the application using `npm run build` | SUCCESS |
+
+The final Jenkins console output confirmed:
+
+```text
+Portfolio checkout, dependency installation, and Next.js build completed successfully.
+Finished: SUCCESS
+```
+<img width="1911" height="872" alt="28" src="https://github.com/user-attachments/assets/bf3f09d6-a444-4df0-9c55-ff6f0999eba8" />
+
+The installation log also reported five high-severity dependency vulnerabilities. Although these did not prevent the build from succeeding, they should be investigated separately using `npm audit`.
+
+### 10.7. Conclusion
+
+The first Jenkins Pipeline for the DevSecOps Portfolio has been implemented and validated successfully. It automates source code retrieval from GitHub, dependency installation, and the production build of the Next.js application.
+
+This pipeline establishes the foundation for a CI/CD workflow. Further improvements could include automated testing, dependency and security scanning, build caching, Docker image creation, and application deployment.
 
 
 
