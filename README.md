@@ -423,3 +423,73 @@ JavaScript for interactive theme switching.
 
 
 
+# Step 9 — Dynamic Project Rendering with JavaScript
+
+Objective
+
+The projects section of the DevSecOps portfolio is generated dynamically using JavaScript. Project information is stored in an array of objects, and the renderProjects() function creates the HTML cards automatically.
+
+JavaScript Code
+
+The following excerpt demonstrates how project data is stored and rendered dynamically.
+
+const projects = [
+    {
+        title: "E-commerce Microservices Platform",
+        description:
+            "A microservices project exploring REST APIs, automated testing, and containerization.",
+        technologies: ["Node.js", "Microservices", "Docker", "Jenkins"],
+        github: "https://github.com/BahaEssid1",
+        linkLabel: "Explore repositories"
+    },
+    {
+        title: "DevOps Portfolio",
+        description:
+            "A responsive portfolio presenting technical skills and DevOps projects.",
+        technologies: ["HTML", "CSS", "JavaScript", "Git"],
+        github: "https://github.com/BahaEssid1",
+        linkLabel: "View GitHub profile"
+    }
+];
+
+function renderProjects() {
+    const container = document.getElementById("projects-container");
+
+   if (!container) {
+        console.error("Projects container was not found.");
+        return;
+    }
+
+   container.innerHTML = projects.map((project, index) => {
+        const technologyTags = project.technologies
+            .map(technology =>
+              <span class="tech-tag">${technology}</span>`
+            )
+            .join("");
+
+   return `
+  <article class="project-card">
+           <span>PROJECT ${String(index + 1).padStart(2, "0")}</span>
+                <h3>${project.title}</h3>
+                <p>${project.description}</p>
+                <div class="project-technologies">
+                    ${technologyTags}
+                </div>
+                <a href="${project.github}"
+                   target="_blank"
+                   rel="noopener noreferrer">
+                    ${project.linkLabel} ↗
+                </a>
+            </article>
+        `;
+    }).join("");
+}
+
+renderProjects();
+
+
+
+<img width="1846" height="812" alt="14" src="https://github.com/user-attachments/assets/776e75bd-86fb-4489-a011-3d047fe21a70" />
+
+
+
