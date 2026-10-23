@@ -526,3 +526,114 @@ const projects = [
 
 
 
+
+# Step 10 — Create a Dockerfile for the DevSecOps Portfolio
+
+Objective
+
+Create a Dockerfile using the official Nginx Alpine image to serve the DevSecOps Portfolio as a static website.
+
+Dockerfile
+
+FROM nginx:alpine
+
+COPY cv/ /usr/share/nginx/html/
+
+EXPOSE 80
+
+Explanation
+
+FROM nginx:alpine: Uses the lightweight official Nginx Alpine image as the base image.
+
+COPY cv/ /usr/share/nginx/html/: Copies the portfolio files into the default Nginx web directory.
+
+EXPOSE 80: Documents the HTTP port used by Nginx inside the container.
+
+The Dockerfile allows the portfolio to be packaged into a portable image and served through an Nginx web server without installing Nginx directly on the host operating system.
+
+
+
+<img width="961" height="322" alt="15" src="https://github.com/user-attachments/assets/b7e4f912-697b-4bf9-8d0b-b69adc91b830" />
+
+
+# Step 11 — Build the Docker Image
+
+Objective
+
+Build a Docker image named cv-docker using the Dockerfile created in Step 10.
+
+Command
+
+docker build -t cv-docker .
+
+The command was executed from the project directory on the Ubuntu Server VM. Docker downloaded the required Nginx Alpine base image, copied the portfolio files, and successfully built the cv-docker:latest image.
+
+Verification
+
+docker images
+
+The output confirmed that the cv-docker:latest image was created successfully.
+
+<img width="977" height="57" alt="16" src="https://github.com/user-attachments/assets/c08d58b9-b042-4b94-93cc-7dc95862348a" />
+
+
+# Step 12 — Run the Container and Access the Portfolio
+
+Objective
+
+Run the cv-docker image in a Docker container, publish the website on a host port, and verify access from the physical Windows machine.
+
+Command
+
+docker run -d --name cv-container -p 8081:80 cv-docker
+
+Explanation
+
+-d: Runs the container in the background.
+
+--name cv-container: Assigns the container the name cv-container.
+
+-p 8081:80: Maps port 8081 on the Ubuntu VM to port 80 inside the container.
+
+cv-docker: Specifies the image used to create the container.
+
+Port 8081 was selected because port 8080 was already in use on the VM.
+
+Verification
+
+Check the running container:
+
+docker ps
+
+The container started successfully with the following port mapping:
+
+0.0.0.0:8081->80/tcp
+
+Test the HTTP response from the Ubuntu VM:
+
+curl -I http://localhost:8081
+
+The server returned:
+
+HTTP/1.1 200 OK
+Server: nginx/1.31.8
+Content-Type: text/html
+
+Access from the Physical Machine
+
+The portfolio was successfully accessed from the Windows browser using:
+
+http://192.168.213.136:8081/
+
+This confirms that the website is served by Nginx inside the Docker container and is accessible from the physical machine through the Ubuntu VM's network address.
+
+Screenshots
+
+
+<img width="1916" height="942" alt="17" src="https://github.com/user-attachments/assets/05dcebe0-a3b8-4a48-8dc6-0ea00317b775" />
+
+
+
+
+
+
