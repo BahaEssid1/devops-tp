@@ -633,6 +633,88 @@ Screenshots
 <img width="1916" height="942" alt="17" src="https://github.com/user-attachments/assets/05dcebe0-a3b8-4a48-8dc6-0ea00317b775" />
 
 
+# 7. Deploying the Portfolio with Docker Compose
+
+## 7.1 Docker Compose Configuration
+
+A `docker-compose.yml` file was created to define and manage the portfolio container.
+
+The configuration builds the Docker image from the project directory, maps host port `8081` to container port `80`, and configures the container to restart unless it is explicitly stopped.
+
+## 7.2 Deploying the Application
+
+The application was deployed on Ubuntu Server using:
+
+```bash
+docker compose up -d --build
+```
+
+The `-d` option runs the service in the background, while `--build` builds the image before starting the container.
+
+## 7.3 Verifying the Deployment
+
+The service status was checked with:
+
+```bash
+docker compose ps
+```
+<img width="1442" height="92" alt="18" src="https://github.com/user-attachments/assets/a781a96c-03ee-42d0-9925-52e5de7a50f5" />
+
+The HTTP response was verified using:
+
+```bash
+curl -I http://localhost:8081
+```
+
+The portfolio was accessible from the Windows host at:
+
+`http://192.168.213.136:8081`
+
+<img width="1916" height="942" alt="17" src="https://github.com/user-attachments/assets/167d1915-c624-4db2-9e61-1f3e2af800ea" />
+
+# 8. Publishing the Project to GitHub Using SSH
+
+## 8.1 SSH Authentication
+
+SSH authentication was configured to allow secure communication between the local development environment and GitHub.
+
+The connection was tested using:
+
+```bash
+ssh -T git@github.com
+```
+
+## 8.2 Updating the Remote Repository
+
+The Git remote was configured to use the SSH URL:
+
+```bash
+git remote set-url origin git@github.com:BahaEssid1/devops-tp.git
+git remote -v
+```
+
+## 8.3 Publishing Changes
+
+The project changes were committed and pushed to GitHub using:
+
+```bash
+git add docker-compose.yml README.md screenshots/
+git commit -m "Deploy portfolio with Docker Compose"
+git push origin main
+```
+
+Repository: [BahaEssid1/devops-tp](https://github.com/BahaEssid1/devops-tp)
+
+### Screenshot
+
+<img width="1135" height="52" alt="19" src="https://github.com/user-attachments/assets/bca3f605-2243-4175-bf06-f6ac8c55e0fa" />
+
+<img width="1440" height="535" alt="20" src="https://github.com/user-attachments/assets/1740d6c4-da03-4735-9984-744f6eb0a950" />
+
+
+
+
+
 
 
 
