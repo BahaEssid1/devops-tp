@@ -385,5 +385,41 @@ This confirms that the Windows machine can authenticate with GitHub using SSH.
 
 ```
 
+
+II. Evolution of the Mini-CV into a DevSecOps Portfolio
+
+7. Portfolio Improvements
+
+The original one-page CV was upgraded into a responsive DevSecOps Portfolio using HTML5, CSS3, and JavaScript.
+
+The portfolio now contains the following sections:
+
+About: Academic background and professional interests.
+
+Skills: Technologies related to development, DevOps, and cloud computing.
+
+Projects: Selected academic and personal projects.
+
+Experience & Learning: Practical labs and academic experience.
+
+Contact: Professional contact information and GitHub profile.
+
+Additional improvements include responsive navigation, project cards, a consistent visual design, and an interactive dark/light theme toggle.
+
+Technologies Used
+
+HTML5 for page structure.
+
+CSS3 for layout, styling, and responsive design.
+
+JavaScript for interactive theme switching.
 ---
+
+<img width="1901" height="912" alt="11" src="https://github.com/user-attachments/assets/1887fba7-f74c-4bc7-9329-02a5755e2293" />
+
+<img width="1897" height="926" alt="12" src="https://github.com/user-attachments/assets/87f73d0f-df5f-41f6-ad43-989c948779e4" />
+
+<img width="1887" height="912" alt="13" src="https://github.com/user-attachments/assets/1de07ead-cd42-4c4c-9f69-c69ecf6fb833" />
+
+
 
