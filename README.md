@@ -711,7 +711,271 @@ Repository: [BahaEssid1/devops-tp](https://github.com/BahaEssid1/devops-tp)
 
 <img width="1440" height="535" alt="20" src="https://github.com/user-attachments/assets/1740d6c4-da03-4735-9984-744f6eb0a950" />
 
+9. Migrating the DevSecOps Portfolio to Next.js
 
+9.1. Task 18 — Create a Next.js Portfolio
+
+A new version of the DevSecOps Portfolio was developed using Next.js, JavaScript, React components, and CSS. The goal was to preserve the main sections of the original HTML/CSS/JavaScript portfolio while improving the application's structure and maintainability.
+
+The new portfolio retains the main sections:
+
+Header and navigation
+
+About
+
+Skills
+
+Projects
+
+Experience and learning
+
+Contact
+
+Footer
+
+Technologies Used
+
+Next.js
+
+React
+
+JavaScript
+
+CSS
+
+Node.js and npm
+
+Project Creation Command
+
+The application was created using the official Next.js project generator:
+
+npx create-next-app@latest portfolio-nextjs
+
+The project was configured to use JavaScript, ESLint, the App Router, and CSS without Tailwind CSS.
+
+Run the Application
+
+Navigate to the application directory and install its dependencies:
+
+cd portfolio-nextjs
+npm install
+
+Start the development server:
+
+npm run dev
+
+Open the following address in a browser:
+
+http://localhost:3000
+
+To generate an optimized production build, run:
+
+npm run build
+
+Application Screenshot
+
+The following screenshot shows the Next.js version of the DevSecOps Portfolio.
+
+Screenshot: Next.js Portfolio Homepage
+
+<!-- Add your homepage screenshot here, for example: docs/screenshots/nextjs-homepage.png -->
+
+
+
+9.2. Task 19 — Create Reusable Components
+
+The portfolio was organized into reusable React components. Each component is responsible for displaying a specific section of the application.
+
+The main components are:
+
+Component
+
+Responsibility
+
+Header.js
+
+Navigation menu and theme toggle
+
+About.js
+
+Personal introduction and profile information
+
+Skills.js
+
+Technical skills and areas of expertise
+
+Projects.js
+
+Display project cards and project information
+
+Contact.js
+
+Contact information and communication links
+
+Footer.js
+
+Footer content and links
+
+Additional components, such as Experience.js, are used to keep the application organized.
+
+Component Structure
+
+portfolio-nextjs/
+├── app/
+│   ├── layout.js
+│   ├── page.js
+│   ├── globals.css
+│   └── projects/
+│       ├── page.js
+│       └── [slug]/
+│           └── page.js
+├── components/
+│   ├── Header.js
+│   ├── About.js
+│   ├── Skills.js
+│   ├── Projects.js
+│   ├── Experience.js
+│   ├── Contact.js
+│   └── Footer.js
+├── data/
+│   ├── skills.js
+│   └── projects.js
+├── public/
+├── package.json
+└── README.md
+
+This structure separates the user interface, page routing, styling, and data. Components can be reused across different pages without duplicating their implementation.
+
+<img width="452" height="882" alt="26" src="https://github.com/user-attachments/assets/c2c66f39-8c99-4b43-9085-93609acc4386" />
+
+
+9.3. Task 20 — Separate Skills and Projects Data
+
+The information displayed in the Skills and Projects sections was moved into separate JavaScript data files.
+
+This approach separates content from presentation and makes it easier to update the portfolio without modifying the components responsible for rendering it.
+
+Skills Data
+
+The file data/skills.js contains an array of skill objects.
+
+Example:
+
+const skills = [
+  {
+    title: "Linux & Networking",
+    description:
+      "Linux administration, Ubuntu Server, SSH, networking fundamentals, and troubleshooting.",
+  },
+  {
+    title: "Containers",
+    description:
+      "Docker images, containers, Dockerfiles, Docker Compose, and containerized applications.",
+  },
+  {
+    title: "CI/CD",
+    description:
+      "Git, GitHub, Jenkins pipelines, automated testing, and software delivery workflows.",
+  },
+];
+
+export default skills;
+
+Projects Data
+
+The file data/projects.js contains the project information used to generate project cards and individual project pages.
+
+Example:
+
+const projects = [
+  {
+    slug: "ecommerce-microservices-platform",
+    title: "E-commerce Microservices Platform",
+    description:
+      "A microservices-based e-commerce application.",
+    technologies: [
+      "JavaScript",
+      "Node.js",
+      "Microservices",
+      "Docker",
+    ],
+    status: "In Progress",
+    details:
+      "A project exploring microservices architecture and DevOps practices.",
+    github: "https://github.com/BahaEssid1",
+  },
+];
+
+export default projects;
+
+The examples above illustrate the data structure. The application uses the complete arrays defined in its actual data files.
+
+Benefits
+
+Maintainability: Skills and projects can be updated in one place.
+
+Reusability: The same data can be displayed on multiple pages.
+
+Consistency: Project cards and project detail pages use a shared source of information.
+
+Scalability: New skills and projects can be added without rewriting the components.
+
+9.4. Task 21 — Create Dedicated Project Pages
+
+Two project-related routes were implemented using the Next.js App Router.
+
+Projects Listing — /projects
+
+The /projects page displays all projects stored in data/projects.js. It reuses the Header, Projects, and Footer components.
+
+Example URL:
+
+http://localhost:3000/projects
+
+Individual Project Details — /projects/project-name
+
+The dynamic route app/projects/[slug]/page.js displays the details of a specific project based on its slug.
+
+For example:
+
+http://localhost:3000/projects/ecommerce-microservices-platform
+
+The page displays the project's title, description, details, technologies, and a link to the GitHub profile.
+
+The generateStaticParams() function generates routes for the projects defined in the data file. This allows Next.js to pre-render the corresponding project pages during the production build.
+
+If a requested slug does not match an existing project, the application displays the Next.js not-found page.
+
+Screenshots
+
+Screenshot 1: Projects Listing Page
+
+<img width="1917" height="951" alt="23" src="https://github.com/user-attachments/assets/7446e52d-0c88-478e-b694-2cb7a6af8f77" />
+
+
+
+
+Screenshot 2: Individual Project Details Page
+
+<img width="1917" height="972" alt="24" src="https://github.com/user-attachments/assets/c0d89ccc-f71b-44dd-826a-ef414dacef90" />
+
+<img width="1917" height="972" alt="25" src="https://github.com/user-attachments/assets/91de7347-93cf-4a00-9cf9-8bbc0af98eaa" />
+
+
+
+
+
+9.5. Validation and Build
+
+The application was tested locally to verify the homepage, reusable components, project listing, and dynamic project detail routes.
+
+The production build was executed using:
+
+npm run build
+
+The build completed successfully, and Next.js generated the static project pages from the project data.
+
+Result: The Next.js portfolio provides a component-based structure, separated data files, and dedicated routes for listing projects and viewing individual project details.
 
 
 
