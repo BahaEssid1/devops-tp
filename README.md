@@ -59,8 +59,6 @@ After authentication, the Ubuntu terminal was accessible remotely from the Windo
 
 ### Screenshot
 
-
-
 ```text
 <img width="951" height="246" alt="1" src="https://github.com/user-attachments/assets/2f7ba8eb-9fa3-4243-bcea-17340f857e88" />
 
@@ -85,8 +83,6 @@ This confirms that:
 - The Ubuntu Server is reachable from the physical machine.
 - The SSH service is running.
 - Remote administration through SSH is working correctly.
-
-
 
 ---
 
@@ -130,8 +126,6 @@ The successful execution confirms that Docker is correctly installed and able to
 
 ### Screenshot
 
-
-
 ```text
 <img width="752" height="75" alt="2" src="https://github.com/user-attachments/assets/7e651f1e-c545-4a7e-8368-4fbd2b7fbcb2" />
 
@@ -170,8 +164,8 @@ The Jenkins repository was then configured:
 echo "deb [signed-by=/etc/apt/keyrings/jenkins-keyring.asc] https://pkg.jenkins.io/debian-stable binary/" | \
 sudo tee /etc/apt/sources.list.d/jenkins.list > /dev/null
 ```
-<img width="1452" height="612" alt="3" src="https://github.com/user-attachments/assets/1e4546b5-0208-4123-b3c5-de0bd32ce099" />
 
+<img width="1452" height="612" alt="3" src="https://github.com/user-attachments/assets/1e4546b5-0208-4123-b3c5-de0bd32ce099" />
 
 ## 4.3 Install Jenkins
 
@@ -186,6 +180,7 @@ Jenkins was installed with:
 ```bash
 sudo apt install -y jenkins
 ```
+
 <img width="1276" height="346" alt="4" src="https://github.com/user-attachments/assets/dfa9aefc-e78a-434e-b389-cdf2b669923e" />
 
 ## 4.4 Verify Jenkins Service
@@ -201,7 +196,6 @@ The service was successfully running.
 Jenkins was also configured to start automatically with the system.
 
 <img width="1445" height="261" alt="5" src="https://github.com/user-attachments/assets/cfc5f662-9976-4e29-91fe-9a768eeeecc4" />
-
 
 ## 4.5 Access Jenkins from the Physical Machine
 
@@ -223,8 +217,6 @@ The Jenkins setup was then completed through the web interface.
 
 ### Screenshot
 
-
-
 ```text
 <img width="1916" height="926" alt="6" src="https://github.com/user-attachments/assets/7448af9c-15a8-4cbe-9c7a-e5058e49e7ee" />
 
@@ -244,8 +236,6 @@ The CV is stored in the `cv` directory of this Git repository.
 
 Project structure:
 
-
-
 ## 5.1 HTML5
 
 The file `index.html` contains the structure and content of the CV.
@@ -259,9 +249,6 @@ It includes sections such as:
 - DevOps Interests
 - Contact information
 
-
-
-
 ## 5.4 Running the CV
 
 The CV can be opened directly in a web browser by opening:
@@ -273,8 +260,6 @@ cv/index.html
 The CV was tested successfully in a web browser.
 
 ### Screenshot
-
-
 
 ```text
 <img width="1917" height="976" alt="7" src="https://github.com/user-attachments/assets/6e2ce7e3-84cb-48b7-a1b7-2232d7ade6be" />
@@ -338,7 +323,6 @@ The complete public key was copied.
 
 <img width="1067" height="510" alt="8" src="https://github.com/user-attachments/assets/370b1e6e-898c-4849-9627-bf355d97ad2b" />
 
-
 ## 6.4 Add the SSH Key to GitHub
 
 In GitHub:
@@ -378,13 +362,10 @@ This confirms that the Windows machine can authenticate with GitHub using SSH.
 
 ### Screenshot
 
-
-
 ```text
 <img width="1070" height="82" alt="10" src="https://github.com/user-attachments/assets/1851957b-ee5f-4721-958f-4ca8ccff19b1" />
 
 ```
-
 
 II. Evolution of the Mini-CV into a DevSecOps Portfolio
 
@@ -412,16 +393,13 @@ HTML5 for page structure.
 
 CSS3 for layout, styling, and responsive design.
 
-JavaScript for interactive theme switching.
----
+## JavaScript for interactive theme switching.
 
 <img width="1901" height="912" alt="11" src="https://github.com/user-attachments/assets/1887fba7-f74c-4bc7-9329-02a5755e2293" />
 
 <img width="1897" height="926" alt="12" src="https://github.com/user-attachments/assets/87f73d0f-df5f-41f6-ad43-989c948779e4" />
 
 <img width="1887" height="912" alt="13" src="https://github.com/user-attachments/assets/1de07ead-cd42-4c4c-9f69-c69ecf6fb833" />
-
-
 
 # Step 9 — Dynamic Project Rendering with JavaScript
 
@@ -434,47 +412,47 @@ JavaScript Code
 The following excerpt demonstrates how project data is stored and rendered dynamically.
 
 const projects = [
-        {
-          title: "E-commerce Microservices Platform",
-          description:
-            "A microservices project exploring REST APIs, service separation, automated testing, and containerization.",
-          technologies: ["Node.js", "Microservices", "Docker", "Jenkins"],
-          github: "https://github.com/BahaEssid1",
-          linkLabel: "Explore repositories",
-        },
-        {
-          title: "DevOps Portfolio",
-          description:
-            "A responsive personal portfolio presenting technical skills, projects, and hands-on DevOps learning.",
-          technologies: ["HTML", "CSS", "JavaScript", "Git"],
-          github: "https://github.com/BahaEssid1",
-          linkLabel: "View GitHub profile",
-        },
-        {
-          title: "K3s Kubernetes Lab",
-          description:
-            "A practical lab exploring Kubernetes concepts, cluster nodes, deployments, services, and Linux administration.",
-          technologies: ["Ubuntu", "K3s", "Kubernetes", "Networking"],
-          github: "https://github.com/BahaEssid1",
-          linkLabel: "Explore repositories",
-        },
-        {
-          title: "Jenkins CI/CD Lab",
-          description:
-            "A learning project focused on Git integration, automated build workflows, testing, and continuous integration.",
-          technologies: ["Jenkins", "GitHub", "Linux", "CI/CD"],
-          github: "https://github.com/BahaEssid1",
-          linkLabel: "Explore repositories",
-        },
-        {
-          title: "Vagrant Infrastructure Lab",
-          description:
-            "A virtual machine lab for practicing reproducible environments and automated provisioning.",
-          technologies: ["Vagrant", "VirtualBox", "Ubuntu", "Automation"],
-          github: "https://github.com/BahaEssid1",
-          linkLabel: "Explore repositories",
-        },
-      ];
+{
+title: "E-commerce Microservices Platform",
+description:
+"A microservices project exploring REST APIs, service separation, automated testing, and containerization.",
+technologies: ["Node.js", "Microservices", "Docker", "Jenkins"],
+github: "https://github.com/BahaEssid1",
+linkLabel: "Explore repositories",
+},
+{
+title: "DevOps Portfolio",
+description:
+"A responsive personal portfolio presenting technical skills, projects, and hands-on DevOps learning.",
+technologies: ["HTML", "CSS", "JavaScript", "Git"],
+github: "https://github.com/BahaEssid1",
+linkLabel: "View GitHub profile",
+},
+{
+title: "K3s Kubernetes Lab",
+description:
+"A practical lab exploring Kubernetes concepts, cluster nodes, deployments, services, and Linux administration.",
+technologies: ["Ubuntu", "K3s", "Kubernetes", "Networking"],
+github: "https://github.com/BahaEssid1",
+linkLabel: "Explore repositories",
+},
+{
+title: "Jenkins CI/CD Lab",
+description:
+"A learning project focused on Git integration, automated build workflows, testing, and continuous integration.",
+technologies: ["Jenkins", "GitHub", "Linux", "CI/CD"],
+github: "https://github.com/BahaEssid1",
+linkLabel: "Explore repositories",
+},
+{
+title: "Vagrant Infrastructure Lab",
+description:
+"A virtual machine lab for practicing reproducible environments and automated provisioning.",
+technologies: ["Vagrant", "VirtualBox", "Ubuntu", "Automation"],
+github: "https://github.com/BahaEssid1",
+linkLabel: "Explore repositories",
+},
+];
 
       // Generate project cards from the projects array.
       function renderProjects() {
@@ -520,12 +498,7 @@ const projects = [
           .join("");
       }
 
-
-
 <img width="1846" height="812" alt="14" src="https://github.com/user-attachments/assets/776e75bd-86fb-4489-a011-3d047fe21a70" />
-
-
-
 
 # Step 10 — Create a Dockerfile for the DevSecOps Portfolio
 
@@ -551,10 +524,7 @@ EXPOSE 80: Documents the HTTP port used by Nginx inside the container.
 
 The Dockerfile allows the portfolio to be packaged into a portable image and served through an Nginx web server without installing Nginx directly on the host operating system.
 
-
-
 <img width="961" height="322" alt="15" src="https://github.com/user-attachments/assets/b7e4f912-697b-4bf9-8d0b-b69adc91b830" />
-
 
 # Step 11 — Build the Docker Image
 
@@ -575,7 +545,6 @@ docker images
 The output confirmed that the cv-docker:latest image was created successfully.
 
 <img width="977" height="57" alt="16" src="https://github.com/user-attachments/assets/c08d58b9-b042-4b94-93cc-7dc95862348a" />
-
 
 # Step 12 — Run the Container and Access the Portfolio
 
@@ -629,9 +598,7 @@ This confirms that the website is served by Nginx inside the Docker container an
 
 Screenshots
 
-
 <img width="1916" height="942" alt="17" src="https://github.com/user-attachments/assets/05dcebe0-a3b8-4a48-8dc6-0ea00317b775" />
-
 
 # 7. Deploying the Portfolio with Docker Compose
 
@@ -658,6 +625,7 @@ The service status was checked with:
 ```bash
 docker compose ps
 ```
+
 <img width="1442" height="92" alt="18" src="https://github.com/user-attachments/assets/a781a96c-03ee-42d0-9925-52e5de7a50f5" />
 
 The HTTP response was verified using:
@@ -713,7 +681,7 @@ Repository: [BahaEssid1/devops-tp](https://github.com/BahaEssid1/devops-tp)
 
 # 9. Migrating the DevSecOps Portfolio to Next.js
 
- ## 9.1. Task 18 — Create a Next.js Portfolio
+## 9.1. Task 18 — Create a Next.js Portfolio
 
 A new version of the DevSecOps Portfolio was developed using Next.js, JavaScript, React components, and CSS. The goal was to preserve the main sections of the original HTML/CSS/JavaScript portfolio while improving the application's structure and maintainability.
 
@@ -761,6 +729,7 @@ Navigate to the application directory and install its dependencies:
 cd portfolio-nextjs
 npm install
 ```
+
 Start the development server:
 
 ```bash
@@ -783,16 +752,11 @@ The following screenshot shows the Next.js version of the DevSecOps Portfolio.
 
 <img width="1342" height="685" alt="27" src="https://github.com/user-attachments/assets/8c451c60-4cf3-47ba-93a0-d8d286684ee9" />
 
-
 Screenshot: Next.js Portfolio Homepage
-
 
 <img width="1917" height="972" alt="22" src="https://github.com/user-attachments/assets/5d7f873a-fed2-4e6f-a658-49cade93ccfa" />
 
-
-
-
- ## 9.2. Task 19 — Create Reusable Components
+## 9.2. Task 19 — Create Reusable Components
 
 The portfolio was organized into reusable React components. Each component is responsible for displaying a specific section of the application.
 
@@ -834,32 +798,33 @@ Component Structure
 
 portfolio-nextjs/
 ├── app/
-│   ├── layout.js
-│   ├── page.js
-│   ├── globals.css
-│   └── projects/
-│       ├── page.js
-│       └── [slug]/
-│           └── page.js
+│ ├── layout.js
+│ ├── page.js
+│ ├── globals.css
+│ └── projects/
+│ ├── page.js
+│ └── [slug]/
+│ └── page.js
 ├── components/
-│   ├── Header.js
-│   ├── About.js
-│   ├── Skills.js
-│   ├── Projects.js
-│   ├── Experience.js
-│   ├── Contact.js
-│   └── Footer.js
+│ ├── Header.js
+│ ├── About.js
+│ ├── Skills.js
+│ ├── Projects.js
+│ ├── Experience.js
+│ ├── Contact.js
+│ └── Footer.js
 ├── data/
-│   ├── skills.js
-│   └── projects.js
+│ ├── skills.js
+│ └── projects.js
 ├── public/
 ├── package.json
 └── README.md
+
 ---
+
 This structure separates the user interface, page routing, styling, and data. Components can be reused across different pages without duplicating their implementation.
 
 <img width="452" height="882" alt="26" src="https://github.com/user-attachments/assets/c2c66f39-8c99-4b43-9085-93609acc4386" />
-
 
 ## 9.3. Task 20 — Separate Skills and Projects Data
 
@@ -874,21 +839,21 @@ The file data/skills.js contains an array of skill objects.
 Example:
 
 const skills = [
-  {
-    title: "Linux & Networking",
-    description:
-      "Linux administration, Ubuntu Server, SSH, networking fundamentals, and troubleshooting.",
-  },
-  {
-    title: "Containers",
-    description:
-      "Docker images, containers, Dockerfiles, Docker Compose, and containerized applications.",
-  },
-  {
-    title: "CI/CD",
-    description:
-      "Git, GitHub, Jenkins pipelines, automated testing, and software delivery workflows.",
-  },
+{
+title: "Linux & Networking",
+description:
+"Linux administration, Ubuntu Server, SSH, networking fundamentals, and troubleshooting.",
+},
+{
+title: "Containers",
+description:
+"Docker images, containers, Dockerfiles, Docker Compose, and containerized applications.",
+},
+{
+title: "CI/CD",
+description:
+"Git, GitHub, Jenkins pipelines, automated testing, and software delivery workflows.",
+},
 ];
 
 export default skills;
@@ -900,22 +865,22 @@ The file data/projects.js contains the project information used to generate proj
 Example:
 
 const projects = [
-  {
-    slug: "ecommerce-microservices-platform",
-    title: "E-commerce Microservices Platform",
-    description:
-      "A microservices-based e-commerce application.",
-    technologies: [
-      "JavaScript",
-      "Node.js",
-      "Microservices",
-      "Docker",
-    ],
-    status: "In Progress",
-    details:
-      "A project exploring microservices architecture and DevOps practices.",
-    github: "https://github.com/BahaEssid1",
-  },
+{
+slug: "ecommerce-microservices-platform",
+title: "E-commerce Microservices Platform",
+description:
+"A microservices-based e-commerce application.",
+technologies: [
+"JavaScript",
+"Node.js",
+"Microservices",
+"Docker",
+],
+status: "In Progress",
+details:
+"A project exploring microservices architecture and DevOps practices.",
+github: "https://github.com/BahaEssid1",
+},
 ];
 
 export default projects;
@@ -932,7 +897,7 @@ Consistency: Project cards and project detail pages use a shared source of infor
 
 Scalability: New skills and projects can be added without rewriting the components.
 
- ## 9.4. Task 21 — Create Dedicated Project Pages
+## 9.4. Task 21 — Create Dedicated Project Pages
 
 Two project-related routes were implemented using the Next.js App Router.
 
@@ -964,20 +929,13 @@ Screenshot 1: Projects Listing Page
 
 <img width="1917" height="951" alt="23" src="https://github.com/user-attachments/assets/7446e52d-0c88-478e-b694-2cb7a6af8f77" />
 
-
-
-
 Screenshot 2: Individual Project Details Page
 
 <img width="1917" height="972" alt="24" src="https://github.com/user-attachments/assets/c0d89ccc-f71b-44dd-826a-ef414dacef90" />
 
 <img width="1917" height="972" alt="25" src="https://github.com/user-attachments/assets/91de7347-93cf-4a00-9cf9-8bbc0af98eaa" />
 
-
-
-
-
- ## 9.5. Validation and Build
+## 9.5. Validation and Build
 
 The application was tested locally to verify the homepage, reusable components, project listing, and dynamic project detail routes.
 
@@ -988,8 +946,6 @@ npm run build
 The build completed successfully, and Next.js generated the static project pages from the project data.
 
 Result: The Next.js portfolio provides a component-based structure, separated data files, and dedicated routes for listing projects and viewing individual project details.
-
-
 
 ## 10. Jenkins Pipeline
 
@@ -1065,7 +1021,6 @@ This stage ensures that Jenkins obtains the latest available source code before 
 
 <img width="931" height="292" alt="29" src="https://github.com/user-attachments/assets/86ab1460-0295-467c-ad0c-786fe2e1b4a0" />
 
-
 ### 10.4. Task 23 — Install Next.js Dependencies
 
 The second stage, `Install Dependencies`, installs the packages required by the Next.js application.
@@ -1083,7 +1038,6 @@ The `npm ci` command installs dependencies according to the `package-lock.json` 
 **Screenshot — Install Dependencies Stage**
 
 <img width="955" height="246" alt="30" src="https://github.com/user-attachments/assets/87983ece-1325-49ac-8563-1c688099c5f1" />
-
 
 ### 10.5. Task 24 — Build the Next.js Application
 
@@ -1103,16 +1057,15 @@ The build generated the homepage, the projects listing page, and the dynamic pro
 
 <img width="982" height="256" alt="31" src="https://github.com/user-attachments/assets/fa2002e9-04db-4516-b761-ce51541fcb4a" />
 
-
 ### 10.6. Pipeline Validation
 
 The Jenkins Pipeline was executed successfully, and all three stages completed without errors:
 
-| Stage | Description | Result |
-|---|---|---|
-| Checkout | Retrieves the repository from GitHub | SUCCESS |
+| Stage                | Description                                  | Result  |
+| -------------------- | -------------------------------------------- | ------- |
+| Checkout             | Retrieves the repository from GitHub         | SUCCESS |
 | Install Dependencies | Installs Next.js dependencies using `npm ci` | SUCCESS |
-| Build Next.js | Builds the application using `npm run build` | SUCCESS |
+| Build Next.js        | Builds the application using `npm run build` | SUCCESS |
 
 The final Jenkins console output confirmed:
 
@@ -1120,6 +1073,7 @@ The final Jenkins console output confirmed:
 Portfolio checkout, dependency installation, and Next.js build completed successfully.
 Finished: SUCCESS
 ```
+
 <img width="1911" height="872" alt="28" src="https://github.com/user-attachments/assets/bf3f09d6-a444-4df0-9c55-ff6f0999eba8" />
 
 The installation log also reported five high-severity dependency vulnerabilities. Although these did not prevent the build from succeeding, they should be investigated separately using `npm audit`.
@@ -1130,6 +1084,77 @@ The first Jenkins Pipeline for the DevSecOps Portfolio has been implemented and 
 
 This pipeline establishes the foundation for a CI/CD workflow. Further improvements could include automated testing, dependency and security scanning, build caching, Docker image creation, and application deployment.
 
+## 11. Automatisation avec Ansible
 
+### 11.1 Installation d'Ansible
 
+Ansible was installed on the Ubuntu administration VM to automate server configuration and package installation.
 
+Verify the installation:
+
+```bash
+ansible --version
+```
+
+### 11.2 Configuration de l'inventaire et test de connexion
+
+The `ansible/inventory` file defines the hosts managed by Ansible.
+
+Current inventory:
+
+```ini
+[servers]
+localhost ansible_connection=local
+```
+
+Test the connection:
+
+```bash
+cd ~/devops-tp/ansible
+ansible all -i inventory -m ping
+```
+
+Expected result: `localhost` returns `SUCCESS` and `ping: pong`.
+
+**Screenshot:** `screenshots/ansible-ping.png`
+
+### 11.3 Installation automatique d'un package Linux
+
+The `ansible/install-package.yml` playbook updates the APT package cache and ensures that `curl` is installed.
+
+Execute the playbook:
+
+```bash
+sudo ansible-playbook -i inventory install-package.yml
+```
+
+Verify the installation:
+
+```bash
+curl --version
+```
+
+**Screenshot:** `screenshots/ansible-install-package.png`
+
+### 11.4 Installation automatique de Docker
+
+The `ansible/install-docker.yml` playbook updates the APT package cache, installs Docker, and ensures that the Docker service is enabled and running.
+
+Execute the playbook:
+
+```bash
+sudo ansible-playbook -i inventory install-docker.yml
+```
+
+Verify Docker:
+
+```bash
+docker --version
+systemctl is-active docker
+```
+
+Docker was installed successfully, and the service returned `active`.
+
+**Screenshot:** `screenshots/ansible-install-docker.png`
+
+**Note:** The current inventory uses `localhost` with a local connection. Remote management of a separate server would require a remote host in the inventory and SSH connectivity.
