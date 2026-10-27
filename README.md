@@ -1084,9 +1084,9 @@ The first Jenkins Pipeline for the DevSecOps Portfolio has been implemented and 
 
 This pipeline establishes the foundation for a CI/CD workflow. Further improvements could include automated testing, dependency and security scanning, build caching, Docker image creation, and application deployment.
 
-## 11. Automatisation avec Ansible
+## VII. Automatisation avec Ansible
 
-### 11.1 Installation d'Ansible
+### 25 Installation d'Ansible
 
 Ansible was installed on the Ubuntu administration VM to automate server configuration and package installation.
 
@@ -1096,7 +1096,7 @@ Verify the installation:
 ansible --version
 ```
 
-### 11.2 Configuration de l'inventaire et test de connexion
+### 26 Configuration de l'inventaire et test de connexion
 
 The `ansible/inventory` file defines the hosts managed by Ansible.
 
@@ -1116,7 +1116,10 @@ ansible all -i inventory -m ping
 
 Expected result: `localhost` returns `SUCCESS` and `ping: pong`.
 
-### 11.3 Installation automatique d'un package Linux
+<img width="1466" height="292" alt="32" src="https://github.com/user-attachments/assets/a478408b-aec8-49a6-94f1-1473e4368943" />
+
+
+### 27 Installation automatique d'un package Linux
 
 The `ansible/install-package.yml` playbook updates the APT package cache and ensures that `curl` is installed.
 
@@ -1132,9 +1135,10 @@ Verify the installation:
 curl --version
 ```
 
-**Screenshot:** `screenshots/ansible-install-package.png`
+<img width="1462" height="460" alt="33" src="https://github.com/user-attachments/assets/ed3e2f41-4dc9-4194-8c7f-35a9213b63d1" />
 
-### 11.4 Installation automatique de Docker
+
+### 28 Installation automatique de Docker
 
 The `ansible/install-docker.yml` playbook updates the APT package cache, installs Docker, and ensures that the Docker service is enabled and running.
 
@@ -1153,7 +1157,8 @@ systemctl is-active docker
 
 Docker was installed successfully, and the service returned `active`.
 
-**Screenshot:** `screenshots/ansible-install-docker.png`
+<img width="1472" height="537" alt="34" src="https://github.com/user-attachments/assets/347e6dc4-1d80-4456-83b4-c94f7ccb123b" />
+
 
 **Note:** The current inventory uses `localhost` with a local connection. Remote management of a separate server would require a remote host in the inventory and SSH connectivity.
 
@@ -1201,7 +1206,8 @@ npm start
 
 Le serveur écoute sur le port `4000`.
 
-**Capture d'écran à ajouter :** démarrage du serveur Express dans le terminal.
+<img width="1152" height="315" alt="45" src="https://github.com/user-attachments/assets/12378c54-c859-49e7-81bb-feb7729ee543" />
+
 
 ---
 
@@ -1233,7 +1239,8 @@ Exemple de réponse JSON :
 
 Le champ `status` indique l'état de santé de l'API, tandis que `timestamp` correspond à la date et à l'heure de la réponse.
 
-**Capture d'écran à ajouter :** résultat de la requête `GET /api/health`.
+<img width="1142" height="692" alt="35" src="https://github.com/user-attachments/assets/4520837b-2ea1-4c9b-8ae8-8a0fe89534a6" />
+
 
 ---
 
@@ -1249,7 +1256,8 @@ curl http://localhost:4000/api/profile
 
 Cette route permet au frontend ou à un autre client de récupérer les informations du profil sans accéder directement au code de présentation.
 
-**Capture d'écran à ajouter :** réponse JSON complète de `GET /api/profile`.
+<img width="1317" height="797" alt="36" src="https://github.com/user-attachments/assets/a19f2443-ac91-4d5f-ae9f-bc3abd90bd76" />
+
 
 ---
 
@@ -1276,7 +1284,8 @@ Exemple de structure de réponse :
 
 _Remarque : les points de suspension illustrent uniquement la structure du résultat. La réponse réelle contient les données des projets._
 
-**Capture d'écran à ajouter :** réponse JSON de `GET /api/projects`.
+<img width="1235" height="811" alt="37" src="https://github.com/user-attachments/assets/96587e63-1c68-4981-9637-6ba222f2389a" />
+
 
 ---
 
@@ -1292,7 +1301,9 @@ curl http://localhost:4000/api/skills
 
 La réponse contient la liste des compétences et leur nombre. L'API retourne actuellement huit catégories de compétences.
 
-**Capture d'écran à ajouter :** réponse JSON de `GET /api/skills`.
+
+<img width="1247" height="822" alt="38" src="https://github.com/user-attachments/assets/463d663e-9f1d-425d-b091-1cecceacf34d" />
+
 
 ---
 
@@ -1304,7 +1315,9 @@ La récupération est réalisée côté serveur à l'aide de `fetch()`. Le compo
 
 Le paramètre `cache: "no-store"` permet de demander les données à l'API à chaque récupération, au lieu de réutiliser une réponse mise en cache.
 
-**Capture d'écran à ajouter :** portfolio Next.js affichant les projets récupérés depuis l'API.
+<img width="1917" height="952" alt="42" src="https://github.com/user-attachments/assets/e492ec87-a239-4946-a13d-573d31ad59e2" />
+
+
 
 ---
 
@@ -1319,7 +1332,9 @@ Cette approche sépare les responsabilités :
 
 Cette séparation facilite la maintenance et permet de réutiliser l'API avec d'autres clients.
 
-**Capture d'écran à ajouter :** section des compétences affichée dans le portfolio Next.js.
+<img width="1912" height="966" alt="43" src="https://github.com/user-attachments/assets/fe14058a-44a7-46e5-adbd-7384f7078190" />
+
+
 
 ---
 
@@ -1516,7 +1531,8 @@ docker compose ps
 
 Les trois services doivent être en cours d'exécution.
 
-**Capture d'écran à ajouter :** résultat de `docker compose ps` montrant les trois services actifs.
+<img width="1467" height="205" alt="44" src="https://github.com/user-attachments/assets/e5be9301-fb3a-4c67-8ddc-8077a6dda418" />
+
 
 ### 42. Vérification de la communication entre le frontend et l'API
 
@@ -1541,7 +1557,14 @@ La réponse indique que l'API est en bonne santé. La route `/api/projects` reto
 
 Le frontend Next.js récupère les données depuis l'API à travers le réseau Docker Compose. Les projets et les compétences sont ensuite affichés dans l'interface du portfolio.
 
-**Capture d'écran à ajouter :** portfolio Next.js déployé affichant les projets et les compétences provenant de l'API Express.
+<img width="1902" height="942" alt="39" src="https://github.com/user-attachments/assets/7eedd2ee-fa81-4f4b-8c1c-ddf754d684fa" />
+
+<img width="1916" height="945" alt="40" src="https://github.com/user-attachments/assets/428866ae-ff43-4502-965f-b6486cd54c6d" />
+
+<img width="1917" height="972" alt="41" src="https://github.com/user-attachments/assets/124f3461-b7ca-4ee3-a2ca-e308ba765a4f" />
+
+
+
 
 ### Résultat
 
