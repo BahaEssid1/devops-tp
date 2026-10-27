@@ -1,4 +1,3 @@
-
 services:
   portfolio:
     build:
@@ -7,4 +6,26 @@ services:
     container_name: cv-container
     ports:
       - "8081:80"
+    restart: unless-stopped
+
+  api:
+    build:
+      context: ./api
+      dockerfile: Dockerfile
+    container_name: portfolio-api
+    ports:
+      - "4000:4000"
+    restart: unless-stopped
+
+  frontend:
+    build:
+      context: ./portfolio-nextjs
+      dockerfile: Dockerfile
+    container_name: portfolio-frontend
+    ports:
+      - "3000:3000"
+    environment:
+      API_URL: http://api:4000
+    depends_on:
+      - api
     restart: unless-stopped

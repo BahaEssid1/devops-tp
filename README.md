@@ -1116,8 +1116,6 @@ ansible all -i inventory -m ping
 
 Expected result: `localhost` returns `SUCCESS` and `ping: pong`.
 
-**Screenshot:** `screenshots/ansible-ping.png`
-
 ### 11.3 Installation automatique d'un package Linux
 
 The `ansible/install-package.yml` playbook updates the APT package cache and ensures that `curl` is installed.
@@ -1158,3 +1156,395 @@ Docker was installed successfully, and the service returned `active`.
 **Screenshot:** `screenshots/ansible-install-docker.png`
 
 **Note:** The current inventory uses `localhost` with a local connection. Remote management of a separate server would require a remote host in the inventory and SSH connectivity.
+
+## VIII. Développement de l'API Node.js / Express
+
+### 29. Création de l'API
+
+Une API REST a été créée dans le dossier `api/` à l'aide de Node.js et du framework Express. Elle est indépendante du frontend Next.js et peut être exécutée séparément.
+
+#### Structure du projet
+
+```text
+devops-tp/
+├── api/
+│   ├── server.js
+│   ├── projects.js
+│   ├── skills.js
+│   ├── package.json
+│   ├── package-lock.json
+│   └── Dockerfile
+├── portfolio-nextjs/
+│   ├── app/
+│   ├── components/
+│   ├── public/
+│   ├── .env.example
+│   ├── Dockerfile
+│   └── next.config.mjs
+├── cv/
+├── Dockerfile
+├── docker-compose.yml
+├── Jenkinsfile
+├── .gitignore
+└── README.md
+```
+
+Le fichier `server.js` définit le serveur Express et les différentes routes de l'API. Les fichiers `projects.js` et `skills.js` contiennent les données utilisées pour les projets et les compétences.
+
+Pour installer les dépendances et démarrer l'API indépendamment du frontend :
+
+```bash
+cd api
+npm ci
+npm start
+```
+
+Le serveur écoute sur le port `4000`.
+
+**Capture d'écran à ajouter :** démarrage du serveur Express dans le terminal.
+
+---
+
+### 30. Route `GET /api/health`
+
+La route `/api/health` permet de vérifier que l'API fonctionne correctement.
+
+Exemple de requête :
+
+```http
+GET /api/health
+```
+
+Commande de test :
+
+```bash
+curl http://localhost:4000/api/health
+```
+
+Exemple de réponse JSON :
+
+```json
+{
+  "status": "healthy",
+  "service": "devsecops-portfolio-api",
+  "timestamp": "2026-10-27T08:40:02.505Z"
+}
+```
+
+Le champ `status` indique l'état de santé de l'API, tandis que `timestamp` correspond à la date et à l'heure de la réponse.
+
+**Capture d'écran à ajouter :** résultat de la requête `GET /api/health`.
+
+---
+
+### 31. Route `GET /api/profile`
+
+La route `/api/profile` retourne les principales informations du portfolio au format JSON.
+
+Exemple de requête :
+
+```bash
+curl http://localhost:4000/api/profile
+```
+
+Cette route permet au frontend ou à un autre client de récupérer les informations du profil sans accéder directement au code de présentation.
+
+**Capture d'écran à ajouter :** réponse JSON complète de `GET /api/profile`.
+
+---
+
+### 32. Route `GET /api/projects`
+
+La route `/api/projects` retourne la liste des projets du portfolio au format JSON.
+
+Exemple de requête :
+
+```bash
+curl http://localhost:4000/api/projects
+```
+
+La réponse contient les projets disponibles ainsi que leur nombre. L'API retourne actuellement cinq projets.
+
+Exemple de structure de réponse :
+
+```json
+{
+  "count": 5,
+  "projects": ["... données des projets ..."]
+}
+```
+
+_Remarque : les points de suspension illustrent uniquement la structure du résultat. La réponse réelle contient les données des projets._
+
+**Capture d'écran à ajouter :** réponse JSON de `GET /api/projects`.
+
+---
+
+### 33. Route `GET /api/skills`
+
+La route `/api/skills` retourne les compétences utilisées dans le portfolio.
+
+Exemple de requête :
+
+```bash
+curl http://localhost:4000/api/skills
+```
+
+La réponse contient la liste des compétences et leur nombre. L'API retourne actuellement huit catégories de compétences.
+
+**Capture d'écran à ajouter :** réponse JSON de `GET /api/skills`.
+
+---
+
+### 34. Récupération des projets depuis l'API Express
+
+Le composant `Projects.js` du frontend Next.js a été modifié afin de récupérer les projets depuis la route `GET /api/projects`, plutôt que de dépendre uniquement de données locales.
+
+La récupération est réalisée côté serveur à l'aide de `fetch()`. Le composant peut ensuite afficher les projets reçus dans l'interface du portfolio.
+
+Le paramètre `cache: "no-store"` permet de demander les données à l'API à chaque récupération, au lieu de réutiliser une réponse mise en cache.
+
+**Capture d'écran à ajouter :** portfolio Next.js affichant les projets récupérés depuis l'API.
+
+---
+
+### 35. Récupération des compétences depuis l'API Express
+
+Le composant `Skills.js` a été modifié de la même manière. Il récupère les compétences depuis la route `GET /api/skills`, puis les affiche dans l'interface Next.js.
+
+Cette approche sépare les responsabilités :
+
+- **API Express :** fournit les données.
+- **Frontend Next.js :** récupère les données et les présente à l'utilisateur.
+
+Cette séparation facilite la maintenance et permet de réutiliser l'API avec d'autres clients.
+
+**Capture d'écran à ajouter :** section des compétences affichée dans le portfolio Next.js.
+
+---
+
+## IX. Variables d'environnement et configuration
+
+### 36. Configuration de `API_URL`
+
+L'URL de l'API est définie à l'aide de la variable d'environnement `API_URL`.
+
+Dans le fichier `portfolio-nextjs/.env.local`, utilisé pour le développement local :
+
+```env
+API_URL=http://localhost:4000
+```
+
+Dans Docker Compose, le frontend utilise :
+
+```yaml
+environment:
+  API_URL: http://api:4000
+```
+
+Dans le réseau Docker Compose, `api` correspond au nom du service Express. Les conteneurs peuvent communiquer entre eux en utilisant les noms de leurs services.
+
+L'URL de l'API ne doit pas être codée en dur dans le code source, car elle peut varier selon l'environnement : développement local, conteneurs Docker ou serveur de production. Une variable d'environnement permet de modifier cette configuration sans changer le code de l'application.
+
+**Important :** `localhost` désigne la machine ou le conteneur dans lequel la requête est exécutée. À l'intérieur du conteneur frontend, `localhost:4000` ne désignerait donc pas le conteneur API.
+
+### 37. Création du fichier `.env.example`
+
+Le fichier `portfolio-nextjs/.env.example` fournit un exemple de configuration sans contenir de secret réel.
+
+Contenu :
+
+```env
+API_URL=http://localhost:4000
+```
+
+Ce fichier permet aux autres développeurs de connaître les variables nécessaires au fonctionnement du projet.
+
+Le fichier `.env.local`, qui contient la configuration utilisée localement, doit rester exclu du dépôt Git. Le fichier `.env.example`, lui, peut être versionné.
+
+---
+
+## X. Dockerisation du frontend et de l'API
+
+### 38. Dockerfile du frontend Next.js
+
+Le fichier `portfolio-nextjs/Dockerfile` permet de construire une image Docker pour le frontend Next.js.
+
+```dockerfile
+FROM node:22-alpine AS builder
+
+WORKDIR /app
+
+COPY package*.json ./
+RUN npm ci
+
+COPY . .
+RUN npm run build
+
+FROM node:22-alpine AS runner
+
+WORKDIR /app
+
+ENV NODE_ENV=production
+ENV PORT=3000
+ENV HOSTNAME="0.0.0.0"
+
+COPY --from=builder /app/public ./public
+COPY --from=builder /app/.next/standalone ./
+COPY --from=builder /app/.next/static ./.next/static
+
+EXPOSE 3000
+
+CMD ["node", "server.js"]
+```
+
+Ce Dockerfile utilise une construction multi-stage :
+
+- **Builder :** installe les dépendances et compile l'application Next.js.
+- **Runner :** récupère uniquement les fichiers nécessaires à l'exécution de l'application en production.
+
+L'option `output: "standalone"` dans `next.config.mjs` permet de générer les fichiers nécessaires à ce mode d'exécution.
+
+Le frontend écoute sur le port `3000`.
+
+### 39. Dockerfile de l'API Express
+
+Le fichier `api/Dockerfile` permet de construire une image Docker pour l'API.
+
+```dockerfile
+FROM node:22-alpine
+
+WORKDIR /app
+
+COPY package*.json ./
+RUN npm ci --omit=dev
+
+COPY . .
+
+ENV NODE_ENV=production
+ENV PORT=4000
+
+EXPOSE 4000
+
+CMD ["node", "server.js"]
+```
+
+Cette image utilise Node.js sur Alpine Linux. Les dépendances de développement ne sont pas installées, ce qui réduit les éléments inutiles dans l'image de production.
+
+L'application Express démarre avec `node server.js` et écoute sur le port `4000`.
+
+### 40. Construction des images Docker
+
+Les deux images peuvent être construites séparément depuis la racine du projet.
+
+Construction de l'image du frontend :
+
+```bash
+docker build -t devsecops-portfolio -f portfolio-nextjs/Dockerfile portfolio-nextjs
+```
+
+Construction de l'image de l'API :
+
+```bash
+docker build -t devsecops-api -f api/Dockerfile api
+```
+
+Vérification des images :
+
+```bash
+docker images
+```
+
+Ces commandes créent les images `devsecops-portfolio` et `devsecops-api`.
+
+### 41. Exécution avec Docker Compose
+
+Le fichier `docker-compose.yml` permet de démarrer le frontend, l'API et le site statique Nginx existant avec une seule commande.
+
+Contenu du fichier :
+
+```yaml
+services:
+  portfolio:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: cv-container
+    ports:
+      - "8081:80"
+    restart: unless-stopped
+
+  api:
+    build:
+      context: ./api
+      dockerfile: Dockerfile
+    container_name: portfolio-api
+    ports:
+      - "4000:4000"
+    restart: unless-stopped
+
+  frontend:
+    build:
+      context: ./portfolio-nextjs
+      dockerfile: Dockerfile
+    container_name: portfolio-frontend
+    ports:
+      - "3000:3000"
+    environment:
+      API_URL: http://api:4000
+    depends_on:
+      - api
+    restart: unless-stopped
+```
+
+Le service `portfolio` correspond au site statique Nginx existant. Le service `api` exécute l'API Express, et le service `frontend` exécute l'application Next.js.
+
+Docker Compose crée un réseau permettant aux services de communiquer entre eux. Le frontend utilise `http://api:4000` pour joindre l'API sur ce réseau.
+
+Pour construire les images et démarrer les services :
+
+```bash
+docker compose build
+docker compose up -d
+```
+
+Pour vérifier l'état des conteneurs :
+
+```bash
+docker compose ps
+```
+
+Les trois services doivent être en cours d'exécution.
+
+**Capture d'écran à ajouter :** résultat de `docker compose ps` montrant les trois services actifs.
+
+### 42. Vérification de la communication entre le frontend et l'API
+
+Après le déploiement, les trois services sont accessibles aux adresses suivantes sur le réseau local de la machine virtuelle Ubuntu :
+
+| Service                  | Adresse                                    |
+| ------------------------ | ------------------------------------------ |
+| Frontend Next.js         | `http://192.168.213.136:3000`              |
+| API Express              | `http://192.168.213.136:4000`              |
+| API — Health check       | `http://192.168.213.136:4000/api/health`   |
+| API — Projets            | `http://192.168.213.136:4000/api/projects` |
+| API — Compétences        | `http://192.168.213.136:4000/api/skills`   |
+| Portfolio statique Nginx | `http://192.168.213.136:8081`              |
+
+Pour vérifier que l'API répond correctement depuis le poste client :
+
+```powershell
+Invoke-RestMethod http://192.168.213.136:4000/api/health
+```
+
+La réponse indique que l'API est en bonne santé. La route `/api/projects` retourne cinq projets, tandis que `/api/skills` retourne huit catégories de compétences.
+
+Le frontend Next.js récupère les données depuis l'API à travers le réseau Docker Compose. Les projets et les compétences sont ensuite affichés dans l'interface du portfolio.
+
+**Capture d'écran à ajouter :** portfolio Next.js déployé affichant les projets et les compétences provenant de l'API Express.
+
+### Résultat
+
+Les étapes 29 à 42 permettent de mettre en place une architecture séparant le frontend et l'API, de configurer les URL avec des variables d'environnement, de créer les images Docker et de déployer les services avec Docker Compose.
+
+Le déploiement a été vérifié sur la machine virtuelle Ubuntu : les trois conteneurs sont actifs, les routes de l'API répondent correctement et le frontend affiche les projets et les compétences récupérés depuis l'API.
