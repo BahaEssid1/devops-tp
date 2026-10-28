@@ -1607,6 +1607,9 @@ Invoke-RestMethod http://localhost:2201/api/health
 
 **Capture d'écran :**
 
+<img width="1235" height="407" alt="46" src="https://github.com/user-attachments/assets/be2e42a6-a28a-49df-b0d9-1e943ee01494" />
+
+
 ### 44. Création automatique de la VM et déploiement
 
 Le fichier `Vagrantfile` automatise la création d'une machine virtuelle Ubuntu 24.04 sous VMware Workstation.
@@ -1644,6 +1647,14 @@ Les ports `2200` et `2201` sont attribués automatiquement par Vagrant, car les 
 
 **Capture d'écran :**
 
+<img width="1007" height="212" alt="50" src="https://github.com/user-attachments/assets/545fd55d-5ae5-4e7f-b500-107ca6c4461a" />
+
+<img width="1470" height="687" alt="49" src="https://github.com/user-attachments/assets/f8f3b8cc-c197-426c-96b8-1101665252e2" />
+
+<img width="1912" height="962" alt="47" src="https://github.com/user-attachments/assets/19e2c1fe-15e5-4303-a20b-4eb4b2997e77" />
+
+
+
 ### 45. Test de recréation complète de la machine virtuelle
 
 **Objectif :** vérifier que l'environnement peut être recréé intégralement à partir du `Vagrantfile` et du playbook Ansible, sans configuration manuelle à l'intérieur de la VM.
@@ -1655,6 +1666,9 @@ vagrant destroy
 ```
 
 Cette commande supprime la machine virtuelle gérée par Vagrant.
+
+<img width="965" height="91" alt="52" src="https://github.com/user-attachments/assets/62dfc764-95ad-480a-86a5-20648ff606ec" />
+
 
 **Étape 2 — Recréation et provisionnement automatique**
 
@@ -1680,9 +1694,7 @@ Vérifier également l'accès au portfolio dans le navigateur.
 
 <!-- Ajouter ici une capture d'écran de vagrant destroy -f. -->
 
-<!-- Ajouter ici une capture d'écran du nouveau vagrant up avec Ansible. -->
-
-<!-- Ajouter ici une capture d'écran de l'API et du portfolio après recréation. -->
+<img width="1235" height="407" alt="46" src="https://github.com/user-attachments/assets/ab552da9-1b2a-47c7-a49e-4f3df3ffb968" />
 
 **État du test :** à compléter après validation réelle de la destruction et de la recréation.
 
@@ -1788,7 +1800,8 @@ try {
 
 The API rejects invalid data with HTTP `400 Bad Request` instead of accepting it.
 
-**Screenshot:** `[Insert screenshot of the invalid contact request and validation response here]`
+<img width="767" height="876" alt="55" src="https://github.com/user-attachments/assets/1692ce57-39d8-4c28-9186-cd8283e0a5df" />
+
 
 ---
 
@@ -1893,7 +1906,10 @@ try {
 
 Expected error code: `INVALID_JSON`, with HTTP `400 Bad Request`. Run this test to capture its actual output before marking it as verified.
 
-**Screenshot:** `[Insert screenshot of the 404 and oversized-payload error responses here]`
+<img width="1301" height="262" alt="56" src="https://github.com/user-attachments/assets/232c6172-6ded-460b-b826-c32632dbabc9" />
+
+
+
 
 ---
 
@@ -1957,7 +1973,8 @@ Other headers were also present, including `X-DNS-Prefetch-Control`, `X-Download
 
 **Deployment note:** These tests were performed over local HTTP. The `Strict-Transport-Security` header does not itself enable HTTPS. A public deployment should use properly configured HTTPS at the reverse proxy or web server.
 
-**Screenshot:** `[Insert screenshot of curl.exe -I showing the Helmet headers here]`
+<img width="1461" height="561" alt="57" src="https://github.com/user-attachments/assets/dfdd0196-6070-49f2-9e17-92bd0f2c731f" />
+
 
 ---
 
@@ -2047,7 +2064,8 @@ HTTP `429 Too Many Requests` indicates that the client has exceeded the configur
 
 The current configuration uses an in-memory store. Its counters reset when the API restarts, and separate API instances do not share counters. A production deployment with multiple instances should use a shared store, such as Redis.
 
-**Screenshot:** `[Insert screenshot showing the HTTP 429 rate-limit response here]`
+<img width="1367" height="647" alt="58" src="https://github.com/user-attachments/assets/97b1e420-be1f-4d9d-8cb0-95229ec2edb6" />
+
 
 ---
 
