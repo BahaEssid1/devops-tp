@@ -1,4 +1,4 @@
-pipeline {
+﻿pipeline {
     agent any
 
     options {
@@ -27,6 +27,23 @@ pipeline {
                 }
             }
         }
+
+        
+        stage('Gitleaks Secret Scan') {
+            steps {
+                sh '''
+                    docker run --rm \
+                      -v "$WORKSPACE:/repo:ro" \
+                      -v "$WORKSPACE:/config-source:ro" \
+                      zricethezav/gitleaks:v8.30.1 \
+                      dir /repo \
+                      --config /config-source/.gitleaks.toml \
+                      --redact \
+                      --exit-code 1
+                '''
+            }
+        }
+
 
         stage('Start Test Database') {
             steps {

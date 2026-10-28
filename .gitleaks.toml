@@ -1,0 +1,12 @@
+
+[extend]
+useDefault = true
+
+[allowlist]
+description = "Exclude generated build and dependency directories"
+paths = [
+  '''(^|/)portfolio-nextjs/\.next/''',
+  '''(^|/)portfolio-nextjs/node_modules/''',
+  '''(^|/)api/node_modules/''',
+  '''(^|/)api/coverage/'''
+]
