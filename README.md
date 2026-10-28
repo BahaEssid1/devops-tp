@@ -2100,3 +2100,419 @@ docker compose ps
 **Résultat observé :** les quatre services (`portfolio`, `api`, `frontend` et `postgres`) sont démarrés. Le service PostgreSQL apparaît avec l'état `healthy`.
 
 **Capture d'écran :** résultat de `docker compose ps` montrant les quatre services actifs et PostgreSQL en état `healthy`.
+
+# 13. Base de données : formulaire Contact et migrations Prisma
+
+## 54. Enregistrement des messages du formulaire Contact dans PostgreSQL
+
+L'API Express permet d'enregistrer les messages envoyés depuis le formulaire Contact dans la base de données PostgreSQL. Les données sont persistées afin de pouvoir être consultées ultérieurement.
+
+Le flux de traitement est le suivant :
+
+1. L'utilisateur remplit le formulaire Contact dans le frontend Next.js.
+2. Le frontend envoie une requête HTTP à l'API Express.
+3. L'API valide les données reçues.
+4. Prisma enregistre le message dans PostgreSQL.
+5. L'API renvoie une réponse indiquant le résultat de l'opération.
+
+**Vérification des données enregistrées :**
+
+Les messages peuvent être consultés dans la table PostgreSQL correspondante.
+
+**Capture d'écran — Messages enregistrés dans PostgreSQL :**
+
+<!-- Ajouter ici la capture d'écran des données enregistrées dans la table Contact. -->
+
+![Messages Contact enregistrés dans PostgreSQL](docs/screenshots/contact-postgresql.png)
+
+## 55. Migrations de base de données avec Prisma
+
+Prisma Migrate permet de gérer l'évolution du schéma de la base de données à l'aide de migrations versionnées.
+
+Les migrations permettent de reproduire les changements de structure de la base de données entre les environnements de développement, de test et de production.
+
+### Commandes utilisées
+
+Créer une migration en développement :
+
+```bash
+npx prisma migrate dev --name nom_de_la_migration
+```
+
+Appliquer les migrations existantes dans un environnement de déploiement :
+
+```bash
+npx prisma migrate deploy
+```
+
+Générer le client Prisma :
+
+```bash
+npx prisma generate
+```
+
+Les fichiers de migration sont conservés dans le répertoire `prisma/migrations/`.
+
+**Capture d'écran — Migrations Prisma :**
+
+<!-- Ajouter ici une capture montrant les migrations créées ou appliquées. -->
+
+![Migrations Prisma](docs/screenshots/prisma-migrations.png)
+
+## 56. Variables de connexion dans `.env.example`
+
+Le fichier `.env.example` documente les variables nécessaires à la connexion à PostgreSQL, sans contenir de véritables identifiants.
+
+Exemple :
+
+```dotenv
+DATABASE_URL="postgresql://USER:PASSWORD@localhost:5432/portfolio?schema=public"
+```
+
+Pour un environnement Docker Compose, l'hôte de connexion doit correspondre au nom du service PostgreSQL lorsque l'API et la base de données sont dans le même réseau Docker.
+
+Les valeurs réelles sont définies dans le fichier `.env` ou dans les variables d'environnement du système. Le fichier `.env` contenant des secrets ne doit pas être versionné.
+
+---
+
+# 14. Tests applicatifs
+
+## 57. Tests automatisés du frontend Next.js
+
+Des tests automatisés sont utilisés pour vérifier le comportement du frontend Next.js et détecter les régressions lors des modifications du code.
+
+### Commande utilisée
+
+```bash
+cd portfolio-nextjs
+npm test
+```
+
+> Utiliser la commande correspondant au script de test défini dans `portfolio-nextjs/package.json`, par exemple `npm run test` si c'est le nom du script configuré.
+
+**Résultat des tests frontend :**
+
+<!-- Ajouter ici une capture d'écran montrant les tests frontend réussis. -->
+
+![Tests frontend réussis](docs/screenshots/frontend-tests.png)
+
+## 58. Tests automatisés d'une route de l'API Express
+
+Des tests automatisés vérifient le comportement d'une route de l'API Express, notamment les codes HTTP retournés et la structure des réponses.
+
+### Commande utilisée
+
+```bash
+cd api
+npm test
+```
+
+Ces tests permettent de vérifier que la route fonctionne conformément au comportement attendu.
+
+**Résultat des tests API :**
+
+<!-- Ajouter ici une capture d'écran montrant les tests API réussis. -->
+
+![Tests API réussis](docs/screenshots/api-tests.png)
+
+## 59. Tests de sécurité des entrées
+
+Des tests complémentaires vérifient le comportement de l'API face à des entrées invalides ou malformées et à des tentatives d'injection.
+
+Les cas testés comprennent notamment :
+
+- Champs obligatoires absents.
+- Types de données incorrects.
+- Formats de données invalides.
+- Corps de requête JSON malformé.
+- Entrées contenant des caractères ou expressions pouvant être utilisés dans une tentative d'injection.
+- Requêtes ne respectant pas le schéma attendu.
+
+L'objectif est de vérifier que l'API rejette les requêtes non valides avec des réponses HTTP appropriées et ne révèle pas d'informations internes sensibles.
+
+Les tests d'injection vérifient également que les données sont traitées comme des valeurs et non comme du code SQL exécutable.
+
+### Commande utilisée
+
+```bash
+cd api
+npm test
+```
+
+**Résultats des tests de sécurité :**
+
+<!-- Ajouter ici une capture d'écran des résultats des tests portant sur les entrées invalides et les requêtes malformées. -->
+
+![Tests de sécurité réussis](docs/screenshots/security-tests.png)
+
+## 60. Tests d'intégration : frontend → API → PostgreSQL
+
+Les tests d'intégration vérifient la communication entre les différentes couches de l'application.
+
+Chaîne vérifiée :
+
+```text
+Frontend Next.js
+       |
+       | Requête HTTP
+       v
+API Express
+       |
+       | Requête Prisma
+       v
+PostgreSQL
+```
+
+Le test vérifie que les données envoyées depuis le frontend atteignent l'API, sont traitées correctement et peuvent être enregistrées dans PostgreSQL.
+
+### Étapes de vérification
+
+1. Démarrer les services nécessaires.
+2. Envoyer les données depuis le formulaire Contact.
+3. Vérifier la réponse HTTP de l'API.
+4. Vérifier que le message a été enregistré dans PostgreSQL.
+
+### Commandes utilisées
+
+Exécuter les tests d'intégration à l'aide du script défini dans le projet :
+
+```bash
+npm test
+```
+
+Pour vérifier directement les données dans PostgreSQL, utiliser le client PostgreSQL ou un outil d'administration de base de données.
+
+**Résultat des tests d'intégration :**
+
+<!-- Ajouter ici une capture d'écran montrant le test réussi et/ou les données enregistrées dans PostgreSQL. -->
+
+![Tests d'intégration réussis](docs/screenshots/integration-tests.png)
+
+---
+
+# 15. Jenkins : tests et images Docker
+
+## 61. Exécution automatique des tests dans Jenkins
+
+Le pipeline Jenkins automatise l'exécution des tests frontend et API afin de détecter les erreurs avant la construction des images Docker.
+
+Les étapes correspondantes sont :
+
+- Exécution des tests frontend Next.js.
+- Exécution des tests de l'API Express.
+
+Si une étape échoue, le pipeline signale l'échec et empêche normalement les étapes suivantes de s'exécuter.
+
+**Capture d'écran — Stages de tests Jenkins :**
+
+<!-- Ajouter ici une capture d'écran de Jenkins montrant les stages de tests. -->
+
+![Stages de tests Jenkins](docs/screenshots/jenkins-tests.png)
+
+## 62. Construction automatique des images Docker
+
+Le pipeline construit automatiquement les deux images de l'application :
+
+- `devsecops-portfolio` : image du frontend Next.js.
+- `devsecops-api` : image de l'API Express.
+
+Les images sont construites à partir des Dockerfiles présents dans le dépôt.
+
+Exemple de commandes Docker :
+
+```bash
+docker build -t devsecops-portfolio:latest ./portfolio-nextjs
+docker build -t devsecops-api:latest ./api
+```
+
+Dans Jenkins, la construction est intégrée au pipeline et s'exécute automatiquement après les étapes précédentes.
+
+**Capture d'écran — Construction des images Docker :**
+
+<!-- Ajouter ici une capture d'écran du stage de construction des images. -->
+
+![Construction des images Docker](docs/screenshots/jenkins-docker-build.png)
+
+## 63. Tag des images Docker avec le Git SHA
+
+Le pipeline utilise une version courte du SHA du commit Git pour identifier les images construites.
+
+Ce mécanisme permet de relier chaque image à une version précise du code source.
+
+Exemple :
+
+```text
+devsecops-portfolio:a1b2c3d
+devsecops-api:a1b2c3d
+```
+
+`a1b2c3d` est un exemple de SHA court ; la valeur réelle dépend du commit utilisé lors de l'exécution du pipeline.
+
+### Vérification des images générées
+
+```bash
+docker image ls devsecops-portfolio
+docker image ls devsecops-api
+```
+
+**Capture d'écran — Images taguées avec le Git SHA :**
+
+<!-- Ajouter ici une capture d'écran montrant les images et leurs tags. -->
+
+![Images Docker taguées avec Git SHA](docs/screenshots/docker-git-sha-tags.png)
+
+---
+
+# 16. Pipeline DevSecOps Jenkins
+
+## 64. Analyse des secrets avec Gitleaks
+
+Gitleaks est intégré au pipeline Jenkins afin de rechercher les secrets qui auraient été accidentellement ajoutés au dépôt Git.
+
+L'analyse vise notamment les éléments suivants :
+
+- Clés API.
+- Tokens d'accès.
+- Mots de passe codés en dur.
+- Autres chaînes pouvant correspondre à des secrets.
+
+L'objectif est de détecter les secrets avant la livraison des images Docker.
+
+**Résultat attendu :** le stage réussit lorsque l'analyse ne détecte aucun secret bloquant.
+
+**Capture d'écran — Gitleaks :**
+
+<!-- Ajouter ici une capture d'écran du stage Gitleaks. -->
+
+![Analyse Gitleaks](docs/screenshots/gitleaks-scan.png)
+
+## 65. Analyse statique du code avec Semgrep (SAST)
+
+Semgrep est utilisé pour analyser statiquement le code source du frontend et du backend.
+
+Cette analyse recherche des motifs de code pouvant présenter des risques de sécurité ou des erreurs de programmation.
+
+Elle complète les tests fonctionnels en examinant le code sans nécessiter son exécution.
+
+**Capture d'écran — Analyse Semgrep :**
+
+<!-- Ajouter ici une capture d'écran du stage Semgrep et de son résultat. -->
+
+![Analyse Semgrep](docs/screenshots/semgrep-scan.png)
+
+## 66. Contrôle des dépendances Node.js avec npm audit
+
+Le pipeline utilise `npm audit` pour rechercher les vulnérabilités connues dans les dépendances Node.js.
+
+L'analyse s'appuie sur les informations de vulnérabilité disponibles pour les packages installés.
+
+### Commande utilisée
+
+```bash
+npm audit
+```
+
+La commande doit être exécutée dans le répertoire du service concerné, selon la configuration du pipeline.
+
+Les vulnérabilités détectées sont examinées afin de déterminer les mises à jour ou corrections nécessaires.
+
+**Capture d'écran — npm audit :**
+
+<!-- Ajouter ici une capture d'écran du résultat npm audit. -->
+
+![Résultat npm audit](docs/screenshots/npm-audit.png)
+
+## 67. Analyse des dépendances avec OWASP Dependency-Check
+
+OWASP Dependency-Check complète l'analyse des dépendances en identifiant les composants logiciels susceptibles de présenter des vulnérabilités connues.
+
+L'outil compare les composants détectés aux informations de vulnérabilité disponibles, notamment celles associées aux identifiants CVE.
+
+Cette analyse complète `npm audit` et les autres contrôles de sécurité du pipeline.
+
+### Exemple de vulnérabilité détectée
+
+Lorsqu'une dépendance vulnérable est identifiée, le rapport peut présenter :
+
+- Le nom du composant concerné.
+- Sa version.
+- L'identifiant CVE associé, lorsqu'il est disponible.
+- La sévérité de la vulnérabilité.
+- Des informations permettant d'identifier une version corrigée.
+
+L'exemple réel doit être repris du rapport produit par l'analyse du projet. Il ne faut pas utiliser un CVE fictif comme preuve d'une détection effective.
+
+**Capture d'écran — Rapport OWASP Dependency-Check :**
+
+<!-- Ajouter ici une capture d'écran montrant une dépendance vulnérable réellement détectée, avec son identifiant CVE et sa sévérité. -->
+
+![Rapport OWASP Dependency-Check](docs/screenshots/owasp-dependency-check.png)
+
+## 68. Analyse de sécurité des images Docker avec Trivy
+
+Trivy est intégré au pipeline Jenkins afin d'analyser les images Docker construites.
+
+L'analyse recherche les vulnérabilités connues dans les composants du système d'exploitation et les dépendances logicielles détectables.
+
+Les deux images analysées sont :
+
+```text
+devsecops-portfolio:<GIT_SHA>
+devsecops-api:<GIT_SHA>
+```
+
+### Commandes de scan
+
+Exemple pour le frontend :
+
+```bash
+docker run --rm \
+  -v /var/run/docker.sock:/var/run/docker.sock \
+  -v trivy-cache:/root/.cache/ \
+  aquasec/trivy:latest \
+  image --scanners vuln \
+  --severity HIGH,CRITICAL \
+  --exit-code 1 \
+  "devsecops-portfolio:${GIT_SHA}"
+```
+
+Exemple pour l'API :
+
+```bash
+docker run --rm \
+  -v /var/run/docker.sock:/var/run/docker.sock \
+  -v trivy-cache:/root/.cache/ \
+  aquasec/trivy:latest \
+  image --scanners vuln \
+  --severity HIGH,CRITICAL \
+  --exit-code 1 \
+  "devsecops-api:${GIT_SHA}"
+```
+
+### Seuil de sécurité
+
+Les paramètres `--severity HIGH,CRITICAL` ciblent les vulnérabilités de sévérité élevée et critique.
+
+Le paramètre `--exit-code 1` fait échouer la commande si des vulnérabilités correspondant au seuil configuré sont détectées.
+
+Lors de la vérification manuelle des images corrigées, les deux scans ont réussi avec un code de sortie `0`, sans vulnérabilités HIGH ou CRITICAL détectées.
+
+**Capture d'écran — Scan Trivy du frontend :**
+
+<!-- Ajouter ici une capture d'écran du rapport Trivy frontend. -->
+
+![Scan Trivy frontend](docs/screenshots/trivy-frontend.png)
+
+**Capture d'écran — Scan Trivy de l'API :**
+
+<!-- Ajouter ici une capture d'écran du rapport Trivy API. -->
+
+![Scan Trivy API](docs/screenshots/trivy-api.png)
+
+---
+
+# Conclusion
+
+Les tâches 54 à 68 couvrent la persistance des données du formulaire Contact, les migrations Prisma, les tests applicatifs et d'intégration, la construction automatisée des images Docker ainsi que plusieurs contrôles de sécurité intégrés à Jenkins.
+
+Le pipeline combine des tests, l'analyse des secrets, l'analyse statique du code, le contrôle des dépendances et le scan des images Docker. Les captures d'écran ajoutées à ce document servent à illustrer les résultats effectivement obtenus lors de l'exécution du projet.
