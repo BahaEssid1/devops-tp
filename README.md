@@ -2101,6 +2101,9 @@ docker compose ps
 
 **Capture d'écran :** résultat de `docker compose ps` montrant les quatre services actifs et PostgreSQL en état `healthy`.
 
+<img width="1481" height="276" alt="59" src="https://github.com/user-attachments/assets/05483b1e-6978-4087-8ef9-fd4626884d61" />
+
+
 # 13. Base de données : formulaire Contact et migrations Prisma
 
 ## 54. Enregistrement des messages du formulaire Contact dans PostgreSQL
@@ -2121,9 +2124,10 @@ Les messages peuvent être consultés dans la table PostgreSQL correspondante.
 
 **Capture d'écran — Messages enregistrés dans PostgreSQL :**
 
-<!-- Ajouter ici la capture d'écran des données enregistrées dans la table Contact. -->
+<img width="1477" height="315" alt="60" src="https://github.com/user-attachments/assets/fa867626-4a42-4326-b180-cd28c72086ba" />
 
-![Messages Contact enregistrés dans PostgreSQL](docs/screenshots/contact-postgresql.png)
+
+
 
 ## 55. Migrations de base de données avec Prisma
 
@@ -2153,11 +2157,7 @@ npx prisma generate
 
 Les fichiers de migration sont conservés dans le répertoire `prisma/migrations/`.
 
-**Capture d'écran — Migrations Prisma :**
 
-<!-- Ajouter ici une capture montrant les migrations créées ou appliquées. -->
-
-![Migrations Prisma](docs/screenshots/prisma-migrations.png)
 
 ## 56. Variables de connexion dans `.env.example`
 
@@ -2192,9 +2192,8 @@ npm test
 
 **Résultat des tests frontend :**
 
-<!-- Ajouter ici une capture d'écran montrant les tests frontend réussis. -->
+<img width="1456" height="437" alt="61" src="https://github.com/user-attachments/assets/3ff24ff6-12dc-468d-a599-edc8b7c28665" />
 
-![Tests frontend réussis](docs/screenshots/frontend-tests.png)
 
 ## 58. Tests automatisés d'une route de l'API Express
 
@@ -2211,9 +2210,7 @@ Ces tests permettent de vérifier que la route fonctionne conformément au compo
 
 **Résultat des tests API :**
 
-<!-- Ajouter ici une capture d'écran montrant les tests API réussis. -->
-
-![Tests API réussis](docs/screenshots/api-tests.png)
+<img width="1340" height="532" alt="62" src="https://github.com/user-attachments/assets/daffe41c-60db-437e-ae37-c5df94eb959f" />
 
 ## 59. Tests de sécurité des entrées
 
@@ -2241,9 +2238,7 @@ npm test
 
 **Résultats des tests de sécurité :**
 
-<!-- Ajouter ici une capture d'écran des résultats des tests portant sur les entrées invalides et les requêtes malformées. -->
 
-![Tests de sécurité réussis](docs/screenshots/security-tests.png)
 
 ## 60. Tests d'intégration : frontend → API → PostgreSQL
 
@@ -2282,11 +2277,7 @@ npm test
 
 Pour vérifier directement les données dans PostgreSQL, utiliser le client PostgreSQL ou un outil d'administration de base de données.
 
-**Résultat des tests d'intégration :**
-
-<!-- Ajouter ici une capture d'écran montrant le test réussi et/ou les données enregistrées dans PostgreSQL. -->
-
-![Tests d'intégration réussis](docs/screenshots/integration-tests.png)
+<img width="1340" height="532" alt="62" src="https://github.com/user-attachments/assets/97b36372-7e90-47d1-a795-4caa2305f3e8" />
 
 ---
 
@@ -2305,9 +2296,10 @@ Si une étape échoue, le pipeline signale l'échec et empêche normalement les 
 
 **Capture d'écran — Stages de tests Jenkins :**
 
-<!-- Ajouter ici une capture d'écran de Jenkins montrant les stages de tests. -->
+<img width="1272" height="182" alt="66" src="https://github.com/user-attachments/assets/e209e8cf-f826-4225-9210-b66d6c79f899" />
 
-![Stages de tests Jenkins](docs/screenshots/jenkins-tests.png)
+<img width="1317" height="237" alt="67" src="https://github.com/user-attachments/assets/443c74ea-2118-4e05-9d81-4967f4bf47f3" />
+
 
 ## 62. Construction automatique des images Docker
 
@@ -2329,9 +2321,8 @@ Dans Jenkins, la construction est intégrée au pipeline et s'exécute automatiq
 
 **Capture d'écran — Construction des images Docker :**
 
-<!-- Ajouter ici une capture d'écran du stage de construction des images. -->
+<img width="1167" height="556" alt="69" src="https://github.com/user-attachments/assets/1122e5c2-ed8c-432d-a697-6960565426e1" />
 
-![Construction des images Docker](docs/screenshots/jenkins-docker-build.png)
 
 ## 63. Tag des images Docker avec le Git SHA
 
@@ -2357,9 +2348,10 @@ docker image ls devsecops-api
 
 **Capture d'écran — Images taguées avec le Git SHA :**
 
-<!-- Ajouter ici une capture d'écran montrant les images et leurs tags. -->
+<img width="985" height="478" alt="70" src="https://github.com/user-attachments/assets/1456a231-aacb-479a-8ae8-f463e586eb2d" />
 
-![Images Docker taguées avec Git SHA](docs/screenshots/docker-git-sha-tags.png)
+<img width="1222" height="355" alt="71" src="https://github.com/user-attachments/assets/42f62ade-bf8a-417f-8684-27b41cff254b" />
+
 
 ---
 
@@ -2382,9 +2374,7 @@ L'objectif est de détecter les secrets avant la livraison des images Docker.
 
 **Capture d'écran — Gitleaks :**
 
-<!-- Ajouter ici une capture d'écran du stage Gitleaks. -->
-
-![Analyse Gitleaks](docs/screenshots/gitleaks-scan.png)
+<img width="1350" height="717" alt="72" src="https://github.com/user-attachments/assets/47353c47-f6dd-4def-8982-5093ecbc0676" />
 
 ## 65. Analyse statique du code avec Semgrep (SAST)
 
@@ -2396,9 +2386,10 @@ Elle complète les tests fonctionnels en examinant le code sans nécessiter son 
 
 **Capture d'écran — Analyse Semgrep :**
 
-<!-- Ajouter ici une capture d'écran du stage Semgrep et de son résultat. -->
+<img width="1436" height="820" alt="73" src="https://github.com/user-attachments/assets/22e73ea0-e43a-4462-b04a-421bedfc796c" />
 
-![Analyse Semgrep](docs/screenshots/semgrep-scan.png)
+<img width="1042" height="605" alt="74" src="https://github.com/user-attachments/assets/4c2ef458-84b5-4f8e-b4aa-5b9319ff63fc" />
+
 
 ## 66. Contrôle des dépendances Node.js avec npm audit
 
@@ -2418,9 +2409,8 @@ Les vulnérabilités détectées sont examinées afin de déterminer les mises �
 
 **Capture d'écran — npm audit :**
 
-<!-- Ajouter ici une capture d'écran du résultat npm audit. -->
+<img width="972" height="522" alt="75" src="https://github.com/user-attachments/assets/47792443-ffd0-4ffd-9203-d23afca55842" />
 
-![Résultat npm audit](docs/screenshots/npm-audit.png)
 
 ## 67. Analyse des dépendances avec OWASP Dependency-Check
 
@@ -2444,9 +2434,8 @@ L'exemple réel doit être repris du rapport produit par l'analyse du projet. Il
 
 **Capture d'écran — Rapport OWASP Dependency-Check :**
 
-<!-- Ajouter ici une capture d'écran montrant une dépendance vulnérable réellement détectée, avec son identifiant CVE et sa sévérité. -->
+<img width="1402" height="616" alt="76" src="https://github.com/user-attachments/assets/beba5867-92cb-4cee-a648-b33980890131" />
 
-![Rapport OWASP Dependency-Check](docs/screenshots/owasp-dependency-check.png)
 
 ## 68. Analyse de sécurité des images Docker avec Trivy
 
