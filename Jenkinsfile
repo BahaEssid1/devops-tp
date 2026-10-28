@@ -61,6 +61,18 @@ pipeline {
         }
 
 
+        stage('npm Audit') {
+    steps {
+        dir("${API_DIR}") {
+            sh '''
+                npm ci
+                npm audit --audit-level=high
+            '''
+        }
+    }
+}
+
+
 
         stage('Start Test Database') {
             steps {
