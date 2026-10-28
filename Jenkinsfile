@@ -68,9 +68,37 @@ pipeline {
                 npm ci
                 npm audit --audit-level=high
             '''
+              }
+            }
         }
-    }
-}
+
+
+
+        
+        stage('OWASP Dependency-Check') {
+            steps {
+                withCredentials([string(
+                    credentialsId: 'nvd-api-key',
+                    variable: 'NVD_API_KEY'
+                )]) {
+                    sh '''
+                        mkdir -p dependency-check-report
+
+                        docker run --rm \
+                          -e NVD_API_KEY="$NVD_API_KEY" \
+                          -v "$WORKSPACE:/src" \
+                          -v dependency-check-data:/usr/share/dependency-check/data \
+                          owasp/dependency-check:latest \
+                          --nvdApiKey "$NVD_API_KEY" \
+                          --scan /src/api /src/portfolio-nextjs \
+                          --format HTML \
+                          --out /src/dependency-check-report \
+                          --prettyPrint
+                    '''
+                }
+            }
+        }
+
 
 
 
