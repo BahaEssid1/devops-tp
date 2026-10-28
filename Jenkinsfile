@@ -74,33 +74,6 @@ pipeline {
 
 
 
-        
-        stage('OWASP Dependency-Check') {
-            steps {
-                withCredentials([string(
-                    credentialsId: 'nvd-api-key',
-                    variable: 'NVD_API_KEY'
-                )]) {
-                    sh '''
-                        mkdir -p dependency-check-report
-
-                        docker run --rm \
-                          -e NVD_API_KEY="$NVD_API_KEY" \
-                          -v "$WORKSPACE:/src" \
-                          -v dependency-check-data:/usr/share/dependency-check/data \
-                          owasp/dependency-check:latest \
-                          --nvdApiKey "$NVD_API_KEY" \
-                          --scan /src/api /src/portfolio-nextjs \
-                          --format HTML \
-                          --out /src/dependency-check-report \
-                          --prettyPrint
-                    '''
-                }
-            }
-        }
-
-
-
 
         stage('Start Test Database') {
             steps {
@@ -175,6 +148,33 @@ pipeline {
                 '''
             }
         }
+
+
+        
+        stage('Trivy Image Scan') {
+            steps {
+                sh '''
+                    docker run --rm \
+                      -v /var/run/docker.sock:/var/run/docker.sock \
+                      -v trivy-cache:/root/.cache/ \
+                      aquasec/trivy:latest \
+                      image --scanners vuln \
+                      --severity HIGH,CRITICAL \
+                      --exit-code 1 \
+                      "devsecops-portfolio:${GIT_SHA}"
+
+                    docker run --rm \
+                      -v /var/run/docker.sock:/var/run/docker.sock \
+                      -v trivy-cache:/root/.cache/ \
+                      aquasec/trivy:latest \
+                      image --scanners vuln \
+                      --severity HIGH,CRITICAL \
+                      --exit-code 1 \
+                      "devsecops-api:${GIT_SHA}"
+                '''
+            }
+        }
+
 
         stage('Show Image Tags') {
             steps {
