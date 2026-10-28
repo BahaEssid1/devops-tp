@@ -16,11 +16,13 @@ RUN DATABASE_URL="postgresql://user:password@localhost:5432/portfolio?schema=pub
 # Keep runtime dependencies only.
 RUN npm prune --omit=dev
 
-COPY . .
+COPY --chown=node:node . .
 
 ENV NODE_ENV=production
 ENV PORT=4000
 
 EXPOSE 4000
+
+USER node
 
 CMD ["node", "server.js"]
