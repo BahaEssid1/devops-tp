@@ -44,6 +44,23 @@ pipeline {
             }
         }
 
+        
+        stage('Semgrep SAST') {
+            steps {
+                sh '''
+                    docker run --rm \
+                      -v "$WORKSPACE:/src:ro" \
+                      semgrep/semgrep \
+                      semgrep scan \
+                      --config auto \
+                      --severity ERROR \
+                      --error \
+                      /src/portfolio-nextjs /src/api
+                '''
+            }
+        }
+
+
 
         stage('Start Test Database') {
             steps {
