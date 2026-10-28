@@ -1118,7 +1118,6 @@ Expected result: `localhost` returns `SUCCESS` and `ping: pong`.
 
 <img width="1466" height="292" alt="32" src="https://github.com/user-attachments/assets/a478408b-aec8-49a6-94f1-1473e4368943" />
 
-
 ### 27 Installation automatique d'un package Linux
 
 The `ansible/install-package.yml` playbook updates the APT package cache and ensures that `curl` is installed.
@@ -1136,7 +1135,6 @@ curl --version
 ```
 
 <img width="1462" height="460" alt="33" src="https://github.com/user-attachments/assets/ed3e2f41-4dc9-4194-8c7f-35a9213b63d1" />
-
 
 ### 28 Installation automatique de Docker
 
@@ -1158,7 +1156,6 @@ systemctl is-active docker
 Docker was installed successfully, and the service returned `active`.
 
 <img width="1472" height="537" alt="34" src="https://github.com/user-attachments/assets/347e6dc4-1d80-4456-83b4-c94f7ccb123b" />
-
 
 **Note:** The current inventory uses `localhost` with a local connection. Remote management of a separate server would require a remote host in the inventory and SSH connectivity.
 
@@ -1208,7 +1205,6 @@ Le serveur écoute sur le port `4000`.
 
 <img width="1152" height="315" alt="45" src="https://github.com/user-attachments/assets/12378c54-c859-49e7-81bb-feb7729ee543" />
 
-
 ---
 
 ### 30. Route `GET /api/health`
@@ -1241,7 +1237,6 @@ Le champ `status` indique l'état de santé de l'API, tandis que `timestamp` cor
 
 <img width="1142" height="692" alt="35" src="https://github.com/user-attachments/assets/4520837b-2ea1-4c9b-8ae8-8a0fe89534a6" />
 
-
 ---
 
 ### 31. Route `GET /api/profile`
@@ -1257,7 +1252,6 @@ curl http://localhost:4000/api/profile
 Cette route permet au frontend ou à un autre client de récupérer les informations du profil sans accéder directement au code de présentation.
 
 <img width="1317" height="797" alt="36" src="https://github.com/user-attachments/assets/a19f2443-ac91-4d5f-ae9f-bc3abd90bd76" />
-
 
 ---
 
@@ -1286,7 +1280,6 @@ _Remarque : les points de suspension illustrent uniquement la structure du résu
 
 <img width="1235" height="811" alt="37" src="https://github.com/user-attachments/assets/96587e63-1c68-4981-9637-6ba222f2389a" />
 
-
 ---
 
 ### 33. Route `GET /api/skills`
@@ -1301,9 +1294,7 @@ curl http://localhost:4000/api/skills
 
 La réponse contient la liste des compétences et leur nombre. L'API retourne actuellement huit catégories de compétences.
 
-
 <img width="1247" height="822" alt="38" src="https://github.com/user-attachments/assets/463d663e-9f1d-425d-b091-1cecceacf34d" />
-
 
 ---
 
@@ -1316,8 +1307,6 @@ La récupération est réalisée côté serveur à l'aide de `fetch()`. Le compo
 Le paramètre `cache: "no-store"` permet de demander les données à l'API à chaque récupération, au lieu de réutiliser une réponse mise en cache.
 
 <img width="1917" height="952" alt="42" src="https://github.com/user-attachments/assets/e492ec87-a239-4946-a13d-573d31ad59e2" />
-
-
 
 ---
 
@@ -1333,8 +1322,6 @@ Cette approche sépare les responsabilités :
 Cette séparation facilite la maintenance et permet de réutiliser l'API avec d'autres clients.
 
 <img width="1912" height="966" alt="43" src="https://github.com/user-attachments/assets/fe14058a-44a7-46e5-adbd-7384f7078190" />
-
-
 
 ---
 
@@ -1533,7 +1520,6 @@ Les trois services doivent être en cours d'exécution.
 
 <img width="1467" height="205" alt="44" src="https://github.com/user-attachments/assets/e5be9301-fb3a-4c67-8ddc-8077a6dda418" />
 
-
 ### 42. Vérification de la communication entre le frontend et l'API
 
 Après le déploiement, les trois services sont accessibles aux adresses suivantes sur le réseau local de la machine virtuelle Ubuntu :
@@ -1562,9 +1548,6 @@ Le frontend Next.js récupère les données depuis l'API à travers le réseau D
 <img width="1916" height="945" alt="40" src="https://github.com/user-attachments/assets/428866ae-ff43-4502-965f-b6486cd54c6d" />
 
 <img width="1917" height="972" alt="41" src="https://github.com/user-attachments/assets/124f3461-b7ca-4ee3-a2ca-e308ba765a4f" />
-
-
-
 
 ### Résultat
 
@@ -1609,7 +1592,6 @@ Invoke-RestMethod http://localhost:2201/api/health
 
 <img width="1235" height="407" alt="46" src="https://github.com/user-attachments/assets/be2e42a6-a28a-49df-b0d9-1e943ee01494" />
 
-
 ### 44. Création automatique de la VM et déploiement
 
 Le fichier `Vagrantfile` automatise la création d'une machine virtuelle Ubuntu 24.04 sous VMware Workstation.
@@ -1653,8 +1635,6 @@ Les ports `2200` et `2201` sont attribués automatiquement par Vagrant, car les 
 
 <img width="1912" height="962" alt="47" src="https://github.com/user-attachments/assets/19e2c1fe-15e5-4303-a20b-4eb4b2997e77" />
 
-
-
 ### 45. Test de recréation complète de la machine virtuelle
 
 **Objectif :** vérifier que l'environnement peut être recréé intégralement à partir du `Vagrantfile` et du playbook Ansible, sans configuration manuelle à l'intérieur de la VM.
@@ -1668,7 +1648,6 @@ vagrant destroy
 Cette commande supprime la machine virtuelle gérée par Vagrant.
 
 <img width="965" height="91" alt="52" src="https://github.com/user-attachments/assets/62dfc764-95ad-480a-86a5-20648ff606ec" />
-
 
 **Étape 2 — Recréation et provisionnement automatique**
 
@@ -1802,7 +1781,6 @@ The API rejects invalid data with HTTP `400 Bad Request` instead of accepting it
 
 <img width="767" height="876" alt="55" src="https://github.com/user-attachments/assets/1692ce57-39d8-4c28-9186-cd8283e0a5df" />
 
-
 ---
 
 ## Task 49 — Centralized API Error Handling
@@ -1908,9 +1886,6 @@ Expected error code: `INVALID_JSON`, with HTTP `400 Bad Request`. Run this test 
 
 <img width="1301" height="262" alt="56" src="https://github.com/user-attachments/assets/232c6172-6ded-460b-b826-c32632dbabc9" />
 
-
-
-
 ---
 
 ## Task 50 — HTTP Security Headers with Helmet
@@ -1974,7 +1949,6 @@ Other headers were also present, including `X-DNS-Prefetch-Control`, `X-Download
 **Deployment note:** These tests were performed over local HTTP. The `Strict-Transport-Security` header does not itself enable HTTPS. A public deployment should use properly configured HTTPS at the reverse proxy or web server.
 
 <img width="1461" height="561" alt="57" src="https://github.com/user-attachments/assets/dfdd0196-6070-49f2-9e17-92bd0f2c731f" />
-
 
 ---
 
@@ -2066,7 +2040,6 @@ The current configuration uses an in-memory store. Its counters reset when the A
 
 <img width="1367" height="647" alt="58" src="https://github.com/user-attachments/assets/97b1e420-be1f-4d9d-8cb0-95229ec2edb6" />
 
-
 ---
 
 ## Summary — Tasks 48–51
@@ -2111,3 +2084,19 @@ a complete security audit or eliminate all OWASP API risks.
 Further work should include dependency maintenance, automated security
 testing, HTTPS configuration, and authorization controls if private
 resources or administrative features are introduced.
+
+### 53. Ajout du service PostgreSQL avec Docker Compose
+
+Le service `postgres` utilise l'image `postgres:17-alpine` et crée la base de données `portfolio`. Un volume nommé `postgres_data` assure la persistance des données, tandis qu'un contrôle de santé (`healthcheck`) vérifie que PostgreSQL est prêt à accepter les connexions.
+
+L'API Express dépend de l'état de santé du service PostgreSQL afin de démarrer après la disponibilité de la base de données.
+
+**Vérification des services :**
+
+```powershell
+docker compose ps
+```
+
+**Résultat observé :** les quatre services (`portfolio`, `api`, `frontend` et `postgres`) sont démarrés. Le service PostgreSQL apparaît avec l'état `healthy`.
+
+**Capture d'écran :** résultat de `docker compose ps` montrant les quatre services actifs et PostgreSQL en état `healthy`.

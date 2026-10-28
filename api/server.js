@@ -7,6 +7,8 @@ const projects = require("./projects");
 const skills = require("./skills");
 const helmet = require("helmet");
 const { rateLimit } = require("express-rate-limit");
+const { PrismaClient } = require("@prisma/client");
+const prisma = new PrismaClient();
 const PORT = process.env.PORT || 4000;
 
 app.use(helmet());
@@ -80,8 +82,8 @@ app.get("/api/skills", (req, res) => {
   });
 });
 
-// Task 46 + 48: Contact endpoint with strict Zod validation
-app.post("/api/contact", contactLimiter, (req, res) => {
+// Task 54: Validate and save contact submissions to PostgreSQL
+app.post("/api/contact", contactLimiter, async (req, res, next) => {
   const result = contactSchema.safeParse(req.body);
 
   if (!result.success) {
@@ -97,15 +99,28 @@ app.post("/api/contact", contactLimiter, (req, res) => {
     });
   }
 
-  const { name, email, subject, message } = result.data;
+  try {
+    const { name, email, subject, message } = result.data;
 
-  // Demo endpoint: validates data but does not send or store emails.
-  console.log(`Valid contact submission received from ${email}`);
+    const contactMessage = await prisma.contactMessage.create({
+      data: {
+        name,
+        email,
+        subject,
+        message,
+      },
+    });
 
-  return res.status(201).json({
-    status: "received",
-    message: "Contact form submission received successfully.",
-  });
+    console.log(`Contact submission saved with ID ${contactMessage.id}`);
+
+    return res.status(201).json({
+      status: "received",
+      message: "Contact form submission received successfully.",
+      id: contactMessage.id,
+    });
+  } catch (err) {
+    return next(err);
+  }
 });
 
 
@@ -152,7 +167,7 @@ app.use((err, req, res, next) => {
       : 500;
 
   if (status === 500) {
-    console.error("Internal API error:", err.message);
+    console.error("Internal API error:", err);
   }
 
   return res.status(status).json({
@@ -167,6 +182,10 @@ app.use((err, req, res, next) => {
 });
 
 
-app.listen(PORT, "0.0.0.0", () => {
-  console.log(`API server running on port ${PORT}`);
-});
+if (require.main === module) {
+  app.listen(PORT, "0.0.0.0", () => {
+    console.log(`API server running on port ${PORT}`);
+  });
+}
+
+module.exports = { app, prisma };
