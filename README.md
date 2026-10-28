@@ -1571,3 +1571,525 @@ Le frontend Next.js récupère les données depuis l'API à travers le réseau D
 Les étapes 29 à 42 permettent de mettre en place une architecture séparant le frontend et l'API, de configurer les URL avec des variables d'environnement, de créer les images Docker et de déployer les services avec Docker Compose.
 
 Le déploiement a été vérifié sur la machine virtuelle Ubuntu : les trois conteneurs sont actifs, les routes de l'API répondent correctement et le frontend affiche les projets et les compétences récupérés depuis l'API.
+
+## XII. Automatisation du déploiement avec Ansible et Vagrant
+
+### 43. Déploiement du portfolio avec Ansible et Docker Compose
+
+**Objectif :** automatiser l'installation de Docker et le déploiement des services du portfolio à l'aide d'Ansible.
+
+Le playbook `ansible/playbook.yml` effectue les opérations suivantes :
+
+1. Mise à jour du cache des paquets Ubuntu.
+2. Installation de Docker et du plugin Docker Compose.
+3. Activation et démarrage du service Docker.
+4. Construction des images et démarrage des conteneurs avec Docker Compose.
+
+**Exécution du playbook :**
+
+```powershell
+vagrant provision
+```
+
+**Vérification des conteneurs :**
+
+```powershell
+vagrant ssh -c "docker ps"
+```
+
+**Vérification de l'API :**
+
+```powershell
+Invoke-RestMethod http://localhost:2201/api/health
+```
+
+**Résultat obtenu :** l'API retourne le statut `healthy` et les trois services sont déployés.
+
+**Capture d'écran :**
+
+### 44. Création automatique de la VM et déploiement
+
+Le fichier `Vagrantfile` automatise la création d'une machine virtuelle Ubuntu 24.04 sous VMware Workstation.
+
+Lors de l'exécution de `vagrant up`, les étapes suivantes sont réalisées automatiquement :
+
+1. Création et démarrage de la machine virtuelle.
+2. Configuration du dossier partagé du projet dans `/vagrant`.
+3. Installation d'Ansible dans la machine virtuelle via le provisionneur `ansible_local`.
+4. Exécution du playbook `ansible/playbook.yml`.
+5. Installation de Docker et de Docker Compose.
+6. Construction et lancement des services du portfolio.
+
+**Commande d'automatisation :**
+
+```powershell
+vagrant up --provider=vmware_desktop
+```
+
+**Vérification de l'état de la VM :**
+
+```powershell
+vagrant status
+```
+
+**Accès aux applications :**
+
+| Service           | URL                              |
+| ----------------- | -------------------------------- |
+| Portfolio Next.js | http://localhost:2200            |
+| API Express       | http://localhost:2201/api/health |
+| Portfolio Nginx   | http://localhost:8081            |
+
+Les ports `2200` et `2201` sont attribués automatiquement par Vagrant, car les ports `3000` et `4000` de l'hôte étaient déjà utilisés.
+
+**Capture d'écran :**
+
+### 45. Test de recréation complète de la machine virtuelle
+
+**Objectif :** vérifier que l'environnement peut être recréé intégralement à partir du `Vagrantfile` et du playbook Ansible, sans configuration manuelle à l'intérieur de la VM.
+
+**Étape 1 — Destruction de la VM**
+
+```powershell
+vagrant destroy
+```
+
+Cette commande supprime la machine virtuelle gérée par Vagrant.
+
+**Étape 2 — Recréation et provisionnement automatique**
+
+```powershell
+vagrant up
+```
+
+Vagrant recrée la VM Ubuntu 24.04 et exécute automatiquement le playbook Ansible.
+
+**Étape 3 — Vérification**
+
+```powershell
+vagrant status
+vagrant port
+Invoke-RestMethod http://localhost:2201/api/health
+```
+
+Vérifier également l'accès au portfolio dans le navigateur.
+
+**Résultat attendu :** la VM est recréée et les services sont déployés automatiquement sans installation manuelle de Docker ou lancement manuel des conteneurs.
+
+**Captures d'écran :**
+
+<!-- Ajouter ici une capture d'écran de vagrant destroy -f. -->
+
+<!-- Ajouter ici une capture d'écran du nouveau vagrant up avec Ansible. -->
+
+<!-- Ajouter ici une capture d'écran de l'API et du portfolio après recréation. -->
+
+**État du test :** à compléter après validation réelle de la destruction et de la recréation.
+
+## Task 48 — Strict API Data Validation with Zod
+
+### Objective
+
+Validate incoming API data on the backend to ensure that requests contain valid fields and values before they are processed.
+
+### Implementation
+
+Installed Zod in the Express API:
+
+```bash
+npm install zod
+```
+
+Defined a strict schema for the `POST /api/contact` endpoint:
+
+```javascript
+const contactSchema = z
+  .object({
+    name: z.string().trim().min(2).max(80),
+    email: z.string().trim().email().max(254),
+    subject: z.string().trim().min(3).max(120),
+    message: z.string().trim().min(10).max(2000),
+  })
+  .strict();
+```
+
+The API validates requests using `safeParse()`:
+
+```javascript
+const result = contactSchema.safeParse(req.body);
+
+if (!result.success) {
+  return res.status(400).json({
+    error: {
+      code: "INVALID_CONTACT_DATA",
+      message: "The contact data is invalid.",
+      details: result.error.issues.map((issue) => ({
+        field: issue.path.join("."),
+        message: issue.message,
+      })),
+    },
+  });
+}
+```
+
+The `.strict()` method rejects unexpected fields. The API also limits incoming JSON request bodies to 10 KB.
+
+### Testing
+
+**Test:** Submit invalid contact data.
+
+```powershell
+$body = @{
+    name = "A"
+    email = "not-an-email"
+    subject = "Hi"
+    message = "Short"
+} | ConvertTo-Json
+
+try {
+    Invoke-RestMethod `
+        -Uri "http://localhost:4000/api/contact" `
+        -Method Post `
+        -ContentType "application/json" `
+        -Body $body
+} catch {
+    $_.ErrorDetails.Message
+}
+```
+
+**Observed response:**
+
+```json
+{
+  "error": {
+    "code": "INVALID_CONTACT_DATA",
+    "message": "The contact data is invalid.",
+    "details": [
+      {
+        "field": "name",
+        "message": "Too small: expected string to have >=2 characters"
+      },
+      {
+        "field": "email",
+        "message": "Invalid email address"
+      },
+      {
+        "field": "subject",
+        "message": "Too small: expected string to have >=3 characters"
+      },
+      {
+        "field": "message",
+        "message": "Too small: expected string to have >=10 characters"
+      }
+    ]
+  }
+}
+```
+
+The API rejects invalid data with HTTP `400 Bad Request` instead of accepting it.
+
+**Screenshot:** `[Insert screenshot of the invalid contact request and validation response here]`
+
+---
+
+## Task 49 — Centralized API Error Handling
+
+### Objective
+
+Provide consistent JSON error responses for unknown routes, malformed JSON, oversized request bodies, and unexpected server errors.
+
+### Implementation
+
+Added a 404 handler for requests to nonexistent routes:
+
+```javascript
+app.use((req, res) => {
+  res.status(404).json({
+    error: {
+      code: "NOT_FOUND",
+      message: "Route not found.",
+    },
+  });
+});
+```
+
+Added centralized error middleware to handle malformed JSON, oversized payloads, and unexpected errors. Internal server errors return a generic message rather than exposing stack traces to clients.
+
+The middleware handles:
+
+- `400 Bad Request` — malformed JSON.
+- `413 Payload Too Large` — JSON body exceeds 10 KB.
+- `404 Not Found` — route does not exist.
+- `500 Internal Server Error` — unexpected server failure.
+
+### Test 1 — Unknown route
+
+```powershell
+try {
+    Invoke-RestMethod -Uri "http://localhost:4000/api/unknown"
+} catch {
+    $_.ErrorDetails.Message
+}
+```
+
+**Observed response:**
+
+```json
+{
+  "error": {
+    "code": "NOT_FOUND",
+    "message": "Route not found."
+  }
+}
+```
+
+### Test 2 — Oversized request body
+
+```powershell
+$largeBody = @{
+    name = "Test User"
+    email = "test@example.com"
+    subject = "Testing"
+    message = ("x" * 11000)
+} | ConvertTo-Json
+
+try {
+    Invoke-RestMethod `
+        -Uri "http://localhost:4000/api/contact" `
+        -Method Post `
+        -ContentType "application/json" `
+        -Body $largeBody
+} catch {
+    $_.ErrorDetails.Message
+}
+```
+
+**Observed response:**
+
+```json
+{
+  "error": {
+    "code": "PAYLOAD_TOO_LARGE",
+    "message": "The request body exceeds the allowed size."
+  }
+}
+```
+
+### Test 3 — Malformed JSON
+
+Send an invalid JSON request body:
+
+```powershell
+try {
+    Invoke-RestMethod `
+        -Uri "http://localhost:4000/api/contact" `
+        -Method Post `
+        -ContentType "application/json" `
+        -Body '{"name":'
+} catch {
+    $_.ErrorDetails.Message
+}
+```
+
+Expected error code: `INVALID_JSON`, with HTTP `400 Bad Request`. Run this test to capture its actual output before marking it as verified.
+
+**Screenshot:** `[Insert screenshot of the 404 and oversized-payload error responses here]`
+
+---
+
+## Task 50 — HTTP Security Headers with Helmet
+
+### Objective
+
+Improve the security of HTTP responses by adding commonly recommended security headers to the Express API.
+
+### Implementation
+
+Installed Helmet:
+
+```bash
+npm install helmet
+```
+
+Enabled the middleware before the API routes:
+
+```javascript
+const helmet = require("helmet");
+
+app.use(helmet());
+app.use(express.json({ limit: "10kb" }));
+```
+
+Helmet configures headers that help protect against certain browser-based attacks and insecure resource loading.
+
+### Testing
+
+Used `curl.exe` to inspect the response headers:
+
+```powershell
+curl.exe -I http://localhost:4000/api/health
+```
+
+**Observed output — selected headers:**
+
+```http
+HTTP/1.1 200 OK
+Content-Security-Policy: default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests
+Cross-Origin-Opener-Policy: same-origin
+Cross-Origin-Resource-Policy: same-origin
+Origin-Agent-Cluster: ?1
+Referrer-Policy: no-referrer
+Strict-Transport-Security: max-age=31536000; includeSubDomains
+X-Content-Type-Options: nosniff
+X-Frame-Options: SAMEORIGIN
+X-XSS-Protection: 0
+```
+
+Other headers were also present, including `X-DNS-Prefetch-Control`, `X-Download-Options`, and `X-Permitted-Cross-Domain-Policies`.
+
+### Results
+
+- The health endpoint returned HTTP `200 OK`.
+- Helmet added security-related response headers.
+- `X-Content-Type-Options: nosniff` helps prevent MIME-type sniffing.
+- `X-Frame-Options: SAMEORIGIN` restricts cross-origin framing.
+- `Content-Security-Policy` defines restrictions on resource loading.
+
+**Deployment note:** These tests were performed over local HTTP. The `Strict-Transport-Security` header does not itself enable HTTPS. A public deployment should use properly configured HTTPS at the reverse proxy or web server.
+
+**Screenshot:** `[Insert screenshot of curl.exe -I showing the Helmet headers here]`
+
+---
+
+## Task 51 — Rate Limiting on Sensitive API Routes
+
+### Objective
+
+Reduce repeated submissions and automated abuse of the public contact endpoint.
+
+### Implementation
+
+Installed `express-rate-limit`:
+
+```bash
+npm install express-rate-limit
+```
+
+Configured a rate limiter:
+
+```javascript
+const { rateLimit } = require("express-rate-limit");
+
+const contactLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  limit: 5,
+  standardHeaders: "draft-8",
+  legacyHeaders: false,
+  message: {
+    error: {
+      code: "RATE_LIMITED",
+      message: "Too many contact submissions. Please try again later.",
+    },
+  },
+});
+```
+
+Applied the limiter to the contact route:
+
+```javascript
+app.post("/api/contact", contactLimiter, (req, res) => {
+  // Zod validation and contact request handling
+});
+```
+
+The limit is five requests per client IP address within a 15-minute window. Other routes, such as `/api/health`, do not consume this contact-specific limit.
+
+### Testing
+
+Sent repeated valid requests to the contact endpoint. The request body was:
+
+```powershell
+$body = @{
+    name = "Test User"
+    email = "test@example.com"
+    subject = "Rate limit test"
+    message = "Testing contact rate limiting."
+} | ConvertTo-Json
+```
+
+The observed results were:
+
+```text
+Request 1 : HTTP 201
+Request 2 : HTTP 429
+Request 3 : HTTP 429
+Request 4 : HTTP 429
+Request 5 : HTTP 429
+Request 6 : HTTP 429
+```
+
+The first request succeeded. Subsequent requests were rejected because the client IP had likely already consumed most or all of the rate limit during earlier tests.
+
+**Observed rate-limit response:**
+
+```json
+{
+  "error": {
+    "code": "RATE_LIMITED",
+    "message": "Too many contact submissions. Please try again later."
+  }
+}
+```
+
+HTTP `429 Too Many Requests` indicates that the client has exceeded the configured rate limit.
+
+### Limitations
+
+The current configuration uses an in-memory store. Its counters reset when the API restarts, and separate API instances do not share counters. A production deployment with multiple instances should use a shared store, such as Redis.
+
+**Screenshot:** `[Insert screenshot showing the HTTP 429 rate-limit response here]`
+
+---
+
+## Summary — Tasks 48–51
+
+| Task | Security improvement              | Verification                                         |
+| ---- | --------------------------------- | ---------------------------------------------------- |
+| 48   | Strict input validation with Zod  | Invalid contact data rejected with HTTP 400          |
+| 49   | Centralized JSON error handling   | HTTP 404 and HTTP 413 responses verified             |
+| 50   | HTTP security headers with Helmet | `curl.exe -I` returned HTTP 200 and security headers |
+| 51   | Contact endpoint rate limiting    | HTTP 429 response verified                           |
+
+These improvements strengthen the API's input validation, error handling, HTTP response security, and protection against repeated contact submissions. They are important security controls, but they do not replace a full security audit or additional protections required for a production deployment.
+
+## Task 52 — OWASP API Security Top 10 Assessment
+
+This assessment uses the OWASP API Security Top 10 (2023) to identify
+security risks relevant to the DevSecOps Portfolio API.
+
+Official reference:
+https://api-security.owasp.org/editions/2023/en/0x11-t10/
+
+| OWASP Risk                                            | Relevance to This API                                                             | Mitigation and Status                                                                                                                                                           |
+| ----------------------------------------------------- | --------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| API1: Broken Object Level Authorization               | No user-owned resources or object IDs are currently exposed.                      | Not currently applicable. Add ownership checks if private resources are introduced.                                                                                             |
+| API2: Broken Authentication                           | The current API has no authentication system. Its portfolio endpoints are public. | No login is currently required. Implement and test authentication before introducing private user data or protected operations.                                                 |
+| API3: Broken Object Property Level Authorization      | Unexpected contact fields could be submitted.                                     | Implemented: Zod validates allowed fields and `.strict()` rejects unknown properties. This does not replace authorization checks if private objects are added.                  |
+| API4: Unrestricted Resource Consumption               | Repeated requests and oversized JSON bodies can consume resources.                | Implemented: a 10 KB JSON body limit and a contact rate limit of 5 requests per IP per 15-minute window. Consider a shared rate-limit store for multiple instances.             |
+| API5: Broken Function Level Authorization             | The current routes are public and there are no administrative routes.             | No admin functions are currently exposed. Enforce role-based authorization before adding privileged endpoints.                                                                  |
+| API6: Unrestricted Access to Sensitive Business Flows | Automated submissions could abuse the contact form.                               | Implemented: contact endpoint rate limiting. Consider additional anti-automation measures if abuse becomes a concern.                                                           |
+| API7: Server Side Request Forgery (SSRF)              | The API does not currently fetch URLs supplied by users.                          | Not currently applicable. Validate and restrict destinations if user-controlled URL fetching is introduced.                                                                     |
+| API8: Security Misconfiguration                       | Insecure HTTP headers and error details can increase exposure.                    | Implemented: Helmet security headers and centralized JSON error responses. Public deployment should also use HTTPS and appropriate proxy configuration.                         |
+| API9: Improper Inventory Management                   | Undocumented or forgotten routes can increase the attack surface.                 | Document the API routes and maintain an inventory of endpoints. Review and remove obsolete or debug routes.                                                                     |
+| API10: Unsafe Consumption of APIs                     | The Next.js frontend proxy communicates with the Express API.                     | Implemented: the proxy uses a configured internal service URL and returns a controlled error when the backend is unavailable. Validate responses from any future external APIs. |
+
+### Conclusion
+
+Tasks 48–51 introduced input validation, centralized error handling,
+HTTP security headers, request-size limits, and contact-endpoint rate
+limiting. These controls reduce several risks, but they do not constitute
+a complete security audit or eliminate all OWASP API risks.
+
+Further work should include dependency maintenance, automated security
+testing, HTTPS configuration, and authorization controls if private
+resources or administrative features are introduced.
